@@ -80,7 +80,8 @@ public class Bomber extends Character {
         if (_input.space) {
             System.out.println(_board.getBombs().size() + "   "  +Game.getBombRate());
             if (Game.getBombRate() > 0 && _timeBetweenPutBombs < 0) {
-                placeBomb(Coordinates.pixelToTile(this.getX()+1.0), Coordinates.pixelToTile(this.getY()-Game.TILES_SIZE));
+
+                placeBomb(Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1), Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1));
                 _timeBetweenPutBombs = 0;
                 Game.addBombRate(-1);
             }
