@@ -97,8 +97,9 @@ public class Bomber extends Character {
     protected void placeBomb(int x, int y) {
         System.out.println("Bomb");
         Entity entity_test = this._board.getEntityAt(0,0);
-        Bomb bomb = new Bomb(x,y,this._board);
+        Bomb bomb = new Bomb(x, y, this._board);
         _board.addBomb(bomb);
+//        _board.addEntity(x +  y * _board.getWidth(), bomb);
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
     }
 
@@ -157,12 +158,27 @@ public class Bomber extends Character {
         //System.out.println("" + x +" " + y);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
+                if(this._direction == 0){
+                    if(!((i == 0 && j == 0) || (i == 1 && j == 0))) continue;
+                }
+                if(this._direction == 1){
+                    if(!((i == 1 && j == 1) || (i == 1 && j == 0))) continue;
+                }
+                if(this._direction == 2){
+                    if(!((i == 1 && j == 1) || (i == 0 && j == 1))) continue;
+                }
+                if(this._direction == 3){
+                    if(!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
+                }
                 int curTileX = Coordinates.pixelToTile(x + i * (3.0) / (4.0) * (Game.TILES_SIZE - 1));
                 int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
                 //System.out.println("" + curTileX +" " + curTileY);
                 Entity entity = this._board.getEntityAt(curTileX, curTileY);
                 if (!(entity.getSprite() == Sprite.grass || ((entity instanceof LayeredEntity)&&
                         ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.grass)))
+                    return false;
+                Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
+                if(thisBomb != null && thisBomb.collide(this) == true)
                     return false;
             }
         }
