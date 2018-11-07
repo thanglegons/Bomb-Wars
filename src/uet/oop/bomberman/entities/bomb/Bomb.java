@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Screen;
@@ -15,6 +16,8 @@ public class Bomb extends AnimatedEntitiy {
 	protected Flame[] _flames;
 	protected boolean _exploded = false;
 	protected boolean _allowedToPassThru = true;
+	private int[] dx = new int[]{0, 1, 0, -1};
+	private int[] dy = new int[]{-1, 0, 1, 0};
 	
 	public Bomb(int x, int y, Board board) {
 		_x = x;
@@ -73,10 +76,14 @@ public class Bomb extends AnimatedEntitiy {
      */
 	protected void explode() {
 		_exploded = true;
-		
+		_flames = new Flame[4];
+		//Entity entity_test = this._board.getEntityAt(0,0);
 		// TODO: xử lý khi Character đứng tại vị trí Bomb
 		
 		// TODO: tạo các Flame
+		for (int i=0;i<4;i++){
+			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, Game.getBombRadius(),this._board);
+		}
 	}
 	
 	public FlameSegment flameAt(int x, int y) {

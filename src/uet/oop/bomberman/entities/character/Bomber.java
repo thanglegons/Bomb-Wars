@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.character;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -15,16 +16,15 @@ import java.util.List;
 
 public class Bomber extends Character {
 
-    private List<Bomb> _bombs;
     protected Keyboard _input;
-    private int[] dx = new int[]{0, 1, 0, -1};
-    private int[] dy = new int[]{-1, 0, 1, 0};
-
     /**
      * nếu giá trị này < 0 thì cho phép đặt đối tượng Bomb tiếp theo,
      * cứ mỗi lần đặt 1 Bomb mới, giá trị này sẽ được reset về 0 và giảm dần trong mỗi lần update()
      */
     protected int _timeBetweenPutBombs = 0;
+    private List<Bomb> _bombs;
+    private int[] dx = new int[]{0, 1, 0, -1};
+    private int[] dy = new int[]{-1, 0, 1, 0};
 
     public Bomber(int x, int y, Board board) {
         super(x, y, board);
@@ -40,13 +40,11 @@ public class Bomber extends Character {
             afterKill();
             return;
         }
-
-
-        System.out.println(this.getX() + " " + this.getY());
-        if(_input.up) System.out.println("Up is pressed");
-        if(_input.down) System.out.println("Down is pressed");
-        if(_input.left) System.out.println("Left is pressed");
-        if(_input.right) System.out.println("Right is pressed");
+        //System.out.println(this.getX() + " " + this.getY());
+        if (_input.up) System.out.println("Up is pressed");
+        if (_input.down) System.out.println("Down is pressed");
+        if (_input.left) System.out.println("Left is pressed");
+        if (_input.right) System.out.println("Right is pressed");
 
         if (_timeBetweenPutBombs < -7500) _timeBetweenPutBombs = 0;
         else _timeBetweenPutBombs--;
@@ -79,6 +77,15 @@ public class Bomber extends Character {
      * Kiểm tra xem có đặt được bom hay không? nếu có thì đặt bom tại vị trí hiện tại của Bomber
      */
     private void detectPlaceBomb() {
+        if (_input.space) {
+            System.out.println(_board.getBombs().size() + "   "  +Game.getBombRate());
+            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < 0) {
+                placeBomb(Coordinates.pixelToTile(this.getX()+1.0), Coordinates.pixelToTile(this.getY()-Game.TILES_SIZE));
+                _timeBetweenPutBombs = 0;
+                Game.addBombRate(-1);
+            }
+        }
+
         // TODO: kiểm tra xem phím điều khiển đặt bom có được gõ và giá trị _timeBetweenPutBombs, Game.getBombRate() có thỏa mãn hay không
         // TODO:  Game.getBombRate() sẽ trả về số lượng bom có thể đặt liên tiếp tại thời điểm hiện tại
         // TODO: _timeBetweenPutBombs dùng để ngăn chặn Bomber đặt 2 Bomb cùng tại 1 vị trí trong 1 khoảng thời gian quá ngắn
@@ -87,6 +94,10 @@ public class Bomber extends Character {
     }
 
     protected void placeBomb(int x, int y) {
+        System.out.println("Bomb");
+        Entity entity_test = this._board.getEntityAt(0,0);
+        Bomb bomb = new Bomb(x,y,this._board);
+        _board.addBomb(bomb);
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
     }
 
@@ -122,14 +133,14 @@ public class Bomber extends Character {
     protected void calculateMove() {
         int preDi = this._direction;
         this._direction = -1;
-        if(_input.up) this._direction = 0;
-        if(_input.right) this._direction = 1;
-        if(_input.down) this._direction = 2;
-        if(_input.left) this._direction = 3;
-        if(this._direction == -1){
+        if (_input.up) this._direction = 0;
+        if (_input.right) this._direction = 1;
+        if (_input.down) this._direction = 2;
+        if (_input.left) this._direction = 3;
+        if (this._direction == -1) {
             this._moving = false;
             this._direction = preDi;
-        } else{
+        } else {
             this._moving = true;
             double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
             double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
@@ -142,12 +153,16 @@ public class Bomber extends Character {
     @Override
     public boolean canMove(double x, double y) {
         y -= Game.TILES_SIZE;
-        for(int i = 0; i < 2; i++){
-            for(int j = 0; j < 2; j++){
-                int curTileX = Coordinates.pixelToTile(x + i * (Game.TILES_SIZE - 1));
+        //System.out.println("" + x +" " + y);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                int curTileX = Coordinates.pixelToTile(x + i * (3.0) / (4.0) * (Game.TILES_SIZE - 1));
                 int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
+                //System.out.println("" + curTileX +" " + curTileY);
                 Entity entity = this._board.getEntityAt(curTileX, curTileY);
-                if(entity.getSprite() != Sprite.grass) return false;
+                if (!(entity.getSprite() == Sprite.grass || ((entity instanceof LayeredEntity)&&
+                        ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.grass)))
+                    return false;
             }
         }
         return true;
@@ -157,24 +172,24 @@ public class Bomber extends Character {
     public void move(double xa, double ya) {
         // TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không và thực hiện thay đổi tọa độ _x, _y
         // TODO: nhớ cập nhật giá trị _direction sau khi di chuyển
-        if(canMove(xa, ya)){
+        if (canMove(xa, ya)) {
             this._x = xa;
             this._y = ya;
-        } else{
+        } else {
             int nextDir = -1;
-            for(int len = 1; len < Game.TILES_SIZE / 3 * 2; len++){
-                if(nextDir != -1) break;
-                for(int dir = 0; dir < 4; dir++){
-                    if(dir == this._direction || Math.abs(dir - this._direction) == 2) continue;
+            for (int len = 1; len < Game.TILES_SIZE / 3 * 2; len++) {
+                if (nextDir != -1) break;
+                for (int dir = 0; dir < 4; dir++) {
+                    if (dir == this._direction || Math.abs(dir - this._direction) == 2) continue;
                     double nextX = xa + dx[dir] * Game.getBomberSpeed() * len;
                     double nextY = ya + dy[dir] * Game.getBomberSpeed() * len;
-                    if(canMove(nextX, nextY)){
+                    if (canMove(nextX, nextY)) {
                         nextDir = dir;
                         break;
                     }
                 }
             }
-            if(nextDir == -1) return;
+            if (nextDir == -1) return;
             this._x = xa + dx[nextDir] * Game.getBomberSpeed();
             this._y = ya + dy[nextDir] * Game.getBomberSpeed();
         }
