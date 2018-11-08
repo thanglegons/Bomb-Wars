@@ -5,6 +5,8 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
@@ -41,10 +43,10 @@ public class Bomber extends Character {
             return;
         }
         //System.out.println(this.getX() + " " + this.getY());
-        if (_input.up) System.out.println("Up is pressed");
+        /*if (_input.up) System.out.println("Up is pressed");
         if (_input.down) System.out.println("Down is pressed");
         if (_input.left) System.out.println("Left is pressed");
-        if (_input.right) System.out.println("Right is pressed");
+        if (_input.right) System.out.println("Right is pressed");*/
 
         if (_timeBetweenPutBombs < -7500) _timeBetweenPutBombs = 0;
         else _timeBetweenPutBombs--;
@@ -213,6 +215,16 @@ public class Bomber extends Character {
             this._x = xa + dx[nextDir] * Game.getBomberSpeed();
             this._y = ya + dy[nextDir] * Game.getBomberSpeed();
         }
+        //System.out.println(getTileX() + " " + getTileY());
+        Entity entity = this._board.getEntityAt(getTileX(),getTileY());
+        if (entity instanceof  LayeredEntity) {
+            entity = ((LayeredEntity) entity).getTopEntity();
+            if (entity instanceof Item)
+                entity.collide(this);
+        }
+        if ((_board.getCharacterAtExcluding(getTileX(),getTileY(),this) instanceof Enemy))
+            kill();
+
     }
 
     @Override

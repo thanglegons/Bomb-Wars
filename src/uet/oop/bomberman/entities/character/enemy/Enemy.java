@@ -83,22 +83,24 @@ public abstract class Enemy extends Character {
 		// TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không
 		// TODO: sử dụng move() để di chuyển
 		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
-		/*if (this instanceof Balloon) {
-			_direction = _ai.calculateDirection();
+		/*if (this instanceof Enemy) {
+			_direction = _ai.calculateDirection(_direction,true);
 			this._moving = true;
-			System.out.println("  " + this.getX() +" " + this.getY());
+			System.out.println("  " + this.getX() +" " + this.getY() +" " +this);
 			double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed() / 2.0;
 			double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed() / 2.0;
 			if (canMove(nextX, nextY))
 				move(nextX, nextY);
+			else
+				_direction = _ai.calculateDirection(_direction,false);
 		}*/
 	}
 	
 	@Override
 	public void move(double xa, double ya) {
 		if(!_alive) return;
-		_y += ya;
-		_x += xa;
+		_y = ya;
+		_x = xa;
 	}
 	
 	@Override
@@ -121,7 +123,7 @@ public abstract class Enemy extends Character {
 				if(this._direction == 3){
 					if(!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
 				}
-				int curTileX = Coordinates.pixelToTile(x + i * (3.0) / (4.0) * (Game.TILES_SIZE - 1));
+				int curTileX = Coordinates.pixelToTile(x + i * (4.0) / (4.0) * (Game.TILES_SIZE - 1));
 				int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
 				//System.out.println("" + curTileX +" " + curTileY);
 				Entity entity = this._board.getEntityAt(curTileX, curTileY);

@@ -28,11 +28,11 @@ public class FileLevelLoader extends LevelLoader {
 	 * từ ma trận bản đồ trong tệp cấu hình
 	 */
 	private static char[][] _map;
-	
+
 	public FileLevelLoader(Board board, int level) throws LoadLevelException {
 		super(board, level);
 	}
-	
+
 	@Override
 	public void loadLevel(int level) {
 		try {

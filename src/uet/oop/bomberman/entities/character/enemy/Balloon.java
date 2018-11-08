@@ -14,7 +14,7 @@ public class Balloon extends Enemy {
 		_sprite = Sprite.balloom_left1;
 		
 		_ai = new AILow();
-		_direction = _ai.calculateDirection();
+		_direction = _ai.calculateDirection(_direction,false);
 	}
 
 	@Override
