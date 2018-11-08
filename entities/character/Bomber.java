@@ -215,7 +215,7 @@ public class Bomber extends Character {
             this._x = xa + dx[nextDir] * Game.getBomberSpeed();
             this._y = ya + dy[nextDir] * Game.getBomberSpeed();
         }
-        System.out.println(getTileX() + " " + getTileY());
+        //System.out.println(getTileX() + " " + getTileY());
         Entity entity = this._board.getEntityAt(getTileX(),getTileY());
         if (entity instanceof  LayeredEntity) {
             entity = ((LayeredEntity) entity).getTopEntity();
