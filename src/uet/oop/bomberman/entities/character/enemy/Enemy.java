@@ -3,7 +3,9 @@ package uet.oop.bomberman.entities.character.enemy;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.Message;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
@@ -20,13 +22,15 @@ public abstract class Enemy extends Character {
 	
 	protected double _speed;
 	protected AI _ai;
-
 	protected final double MAX_STEPS;
 	protected final double rest;
 	protected double _steps;
 	
 	protected int _finalAnimation = 30;
 	protected Sprite _deadSprite;
+
+	private int[] dx = new int[]{0, 1, 0, -1};
+	private int[] dy = new int[]{-1, 0, 1, 0};
 	
 	public Enemy(int x, int y, Board board, Sprite dead, double speed, int points) {
 		super(x, y, board);
@@ -79,6 +83,15 @@ public abstract class Enemy extends Character {
 		// TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không
 		// TODO: sử dụng move() để di chuyển
 		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
+		/*if (this instanceof Balloon) {
+			_direction = _ai.calculateDirection();
+			this._moving = true;
+			System.out.println("  " + this.getX() +" " + this.getY());
+			double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed() / 2.0;
+			double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed() / 2.0;
+			if (canMove(nextX, nextY))
+				move(nextX, nextY);
+		}*/
 	}
 	
 	@Override
@@ -91,7 +104,38 @@ public abstract class Enemy extends Character {
 	@Override
 	public boolean canMove(double x, double y) {
 		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-		return false;
+		y -= Game.TILES_SIZE;
+
+		//System.out.println("" + x +" " + y);
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				if(this._direction == 0){
+					if(!((i == 0 && j == 0) || (i == 1 && j == 0))) continue;
+				}
+				if(this._direction == 1){
+					if(!((i == 1 && j == 1) || (i == 1 && j == 0))) continue;
+				}
+				if(this._direction == 2){
+					if(!((i == 1 && j == 1) || (i == 0 && j == 1))) continue;
+				}
+				if(this._direction == 3){
+					if(!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
+				}
+				int curTileX = Coordinates.pixelToTile(x + i * (3.0) / (4.0) * (Game.TILES_SIZE - 1));
+				int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
+				//System.out.println("" + curTileX +" " + curTileY);
+				Entity entity = this._board.getEntityAt(curTileX, curTileY);
+				if (entity.getSprite() == Sprite.brick ||
+						entity.getSprite() == Sprite.wall ||
+						((entity instanceof LayeredEntity)&&
+								((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick))
+					return false;
+				Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
+				if(thisBomb != null && thisBomb.collide(this) == true)
+					return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

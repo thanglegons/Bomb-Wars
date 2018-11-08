@@ -1,8 +1,11 @@
 package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.LayeredEntity;
+import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.entities.tile.destroyable.DestroyableTile;
+import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -70,13 +73,21 @@ public class FlameSegment extends Entity {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý khi FlameSegment va chạm với Character
+		if (e instanceof LayeredEntity){
+			e = ((LayeredEntity) e).getTopEntity();
+		}
 		if (e instanceof DestroyableTile) {
 			((DestroyableTile) e).destroy();
 			return true;
 		}
+		if (e instanceof Item){
+			((Item)e).destroy();
+		}
 		if (e instanceof Character){
-			((Character) e).kill();
-			return true;
+			if (((Character) e).getTileX() == _x && ((Character) e).getTileY() == _y) {
+				((Character) e).kill();
+				return true;
+			}
 		}
 		return false;
 	}

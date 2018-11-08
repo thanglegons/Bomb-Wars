@@ -76,6 +76,7 @@ public class Bomber extends Character {
     /**
      * Kiểm tra xem có đặt được bom hay không? nếu có thì đặt bom tại vị trí hiện tại của Bomber
      */
+
     private void detectPlaceBomb() {
         if (_input.space) {
             System.out.println(_board.getBombs().size() + "   "  +Game.getBombRate());
@@ -96,7 +97,7 @@ public class Bomber extends Character {
 
     protected void placeBomb(int x, int y) {
         System.out.println("Bomb");
-        Entity entity_test = this._board.getEntityAt(0,0);
+        //Entity entity_test = this._board.getEntityAt(0,0);
         Bomb bomb = new Bomb(x, y, this._board);
         _board.addBomb(bomb);
 //        _board.addEntity(x +  y * _board.getWidth(), bomb);
@@ -174,8 +175,10 @@ public class Bomber extends Character {
                 int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
                 //System.out.println("" + curTileX +" " + curTileY);
                 Entity entity = this._board.getEntityAt(curTileX, curTileY);
-                if (!(entity.getSprite() == Sprite.grass || ((entity instanceof LayeredEntity)&&
-                        ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.grass)))
+                if (entity.getSprite() == Sprite.brick ||
+                        entity.getSprite() == Sprite.wall ||
+                        ((entity instanceof LayeredEntity)&&
+                        ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick))
                     return false;
                 Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
                 if(thisBomb != null && thisBomb.collide(this) == true)

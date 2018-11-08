@@ -4,6 +4,7 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.level.Coordinates;
 
 /**
  * Bao gồm Bomber và Enemy
@@ -21,7 +22,12 @@ public abstract class Character extends AnimatedEntitiy {
 		_y = y;
 		_board = board;
 	}
-	
+	public int getTileX(){
+		return Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1);
+	}
+	public int getTileY(){
+		return Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1);
+	}
 	@Override
 	public abstract void update();
 	

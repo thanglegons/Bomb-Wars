@@ -3,6 +3,8 @@ package uet.oop.bomberman.entities.bomb;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
+import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -57,7 +59,10 @@ public class Flame extends Entity {
             );
             //Destroy Entity
             Entity temp = _board.getEntityAt(xOrigin + i * dx[_direction],yOrigin + i * dy[_direction]);
-            _flameSegments[i].collide(_board.getEntityAt(xOrigin + i * dx[_direction],yOrigin + i * dy[_direction]));
+            _flameSegments[i].collide(temp);
+            for (Character character: _board._characters){
+                _flameSegments[i].collide(character);
+            }
         }
     }
 
