@@ -5,7 +5,9 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Balloon;
+import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.Grass;
+import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.entities.tile.item.BombItem;
 import uet.oop.bomberman.entities.tile.item.FlameItem;
@@ -85,7 +87,7 @@ public class FileLevelLoader extends LevelLoader {
 				} else if(this._map[i][j] == '2'){
 					// Add Oneal
 					int xE = j, yE = i;
-					_board.addCharacter( new Balloon(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board));
+					_board.addCharacter( new Oneal(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board));
 					_board.addEntity(xE + yE * _width, new Grass(xE, yE, Sprite.grass));
 				} else if(this._map[i][j] == 'b'){
 					// Add BombItem
@@ -121,10 +123,19 @@ public class FileLevelLoader extends LevelLoader {
 					// Add Wall
 					int pos = j + i * _width;
 					_board.addEntity(pos, new Grass(j, i, Sprite.wall));
-				} else{
+				} else if(this._map[i][j] == ' '){
 					// Add Grass
 					int pos = j + i * _width;
 					_board.addEntity(pos, new Grass(j, i, Sprite.grass));
+				} else{
+					// Add portal
+					int xI = j;
+					int yI = i;
+					int pos = xI + yI * _width;
+					_board.addEntity(pos, new LayeredEntity(xI, yI,
+							new Grass(xI ,yI, Sprite.grass),
+							new Portal(xI, yI, Sprite.portal),
+							new Brick(xI, yI, Sprite.brick)));
 				}
 			}
 		}
