@@ -63,6 +63,9 @@ public class Flame extends Entity {
             for (Character character: _board._characters){
                 _flameSegments[i].collide(character);
             }
+            for (Bomb bomb: _board.getBombs()){
+                _flameSegments[i].collide(bomb);
+            }
         }
     }
 

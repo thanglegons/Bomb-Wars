@@ -86,11 +86,8 @@ public abstract class Enemy extends Character {
 		if (this instanceof Enemy) {
 			_direction = _ai.calculateDirection(_direction,true);
 			this._moving = true;
-			System.out.println("  " + this.getX() +" " + this.getY() +" " +this);
 			double nextX = this.getX() + dx[this._direction] * _speed;
 			double nextY = this.getY() + dy[this._direction] * _speed;
-			if (this.getX() == 144.0 && this.getY() ==64)
-				System.out.print("meh");
 			if (canMove(nextX, nextY))
 				move(nextX, nextY);
 			else

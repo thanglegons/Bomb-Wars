@@ -5,7 +5,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class SpeedItem extends Item {
-
+	boolean used = false;
 	public SpeedItem(int x, int y, Sprite sprite) {
 		super(x, y, sprite);
 	}
@@ -13,7 +13,9 @@ public class SpeedItem extends Item {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý Bomber ăn Item
-		Game.addBomberSpeed(0.5);
+		if (used) return false;
+		used = true;
+		Game.setBomberSpeedV2(Game.getBomberSpeedV2()+0.25);
 		destroy();
 		return false;
 	}

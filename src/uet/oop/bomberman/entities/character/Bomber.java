@@ -48,9 +48,9 @@ public class Bomber extends Character {
         if (_input.left) System.out.println("Left is pressed");
         if (_input.right) System.out.println("Right is pressed");*/
 
-        if (_timeBetweenPutBombs < -7500) _timeBetweenPutBombs = 0;
-        else _timeBetweenPutBombs--;
-
+        //if (_timeBetweenPutBombs >= 7500) _timeBetweenPutBombs = 0;
+        //else _timeBetweenPutBombs--;
+        _timeBetweenPutBombs--;
         animate();
 
         calculateMove();
@@ -81,9 +81,9 @@ public class Bomber extends Character {
 
     private void detectPlaceBomb() {
         if (_input.space) {
-            System.out.println(_board.getBombs().size() + "   "  +Game.getBombRate());
-            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < 0) {
+            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10) {
 
+                System.out.println(_timeBetweenPutBombs + "   "  +Game.getBombRate());
                 placeBomb(Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1), Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1));
                 _timeBetweenPutBombs = 0;
                 Game.addBombRate(-1);
@@ -147,9 +147,13 @@ public class Bomber extends Character {
             this._direction = preDi;
         } else {
             this._moving = true;
-            double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
-            double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
-            move(nextX, nextY);
+            System.out.println(Game.getBomberSpeedV2());
+                double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
+                double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
+                move(nextX, nextY);
+                nextX = this.getX() + dx[this._direction] * Game.getBomberSpeedV2();
+                nextY = this.getY() + dy[this._direction] * Game.getBomberSpeedV2();
+                move(nextX,nextY);
         }
         // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển

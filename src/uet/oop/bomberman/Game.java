@@ -23,7 +23,7 @@ public class Game extends Canvas {
 
 	public static final String TITLE = "ShitGame";
 
-	private static final int BOMBRATE = 1;
+	private static final int BOMBRATE = 2;
 	private static final int BOMBRADIUS = 1;
 	private static final double BOMBERSPEED = 1.0;
 
@@ -35,7 +35,7 @@ public class Game extends Canvas {
 	protected static int bombRate = BOMBRATE;
 	protected static int bombRadius = BOMBRADIUS;
 	protected static double bomberSpeed = BOMBERSPEED;
-
+	protected static double bomberSpeedV2 = 0;
 
 	protected int _screenDelay = SCREENDELAY;
 
@@ -195,4 +195,11 @@ public class Game extends Canvas {
 		_paused = true;
 	}
 
+	public static double getBomberSpeedV2() {
+		return bomberSpeedV2;
+	}
+
+	public static void setBomberSpeedV2(double bomberSpeedV2) {
+		Game.bomberSpeedV2 = bomberSpeedV2;
+	}
 }

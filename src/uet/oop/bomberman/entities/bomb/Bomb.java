@@ -78,6 +78,7 @@ public class Bomb extends AnimatedEntitiy {
 	 * Xử lý Bomb nổ
 	 */
 	protected void explode() {
+		if (_exploded) return;
 		_exploded = true;
 		_flames = new Flame[4];
 		//Entity entity_test = this._board.getEntityAt(0,0);
@@ -108,14 +109,14 @@ public class Bomb extends AnimatedEntitiy {
 			if(_allowedToPassThru){
 				int curTileBomberX = Coordinates.pixelToTile(e.getX() + Game.TILES_SIZE / 2 - 1);
 				int curTileBomberY = Coordinates.pixelToTile(e.getY() - Game.TILES_SIZE / 2 - 1);
-				System.out.println(curTileBomberX + " " + curTileBomberY);
-				System.out.println(this._x + " " + this._y);
+				//System.out.println(curTileBomberX + " " + curTileBomberY);
+				//System.out.println(this._x + " " + this._y);
 				if((int)this._x != curTileBomberX || (int)this._y != curTileBomberY){
 					_allowedToPassThru = false;
 				}
 				return false;
 			}
-			System.out.println("wtf");
+			//System.out.println("wtf");
 			return true;
 		}
 		// TODO: xử lý va chạm với Flame của Bomb khác

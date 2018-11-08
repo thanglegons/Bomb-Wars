@@ -73,6 +73,10 @@ public class FlameSegment extends Entity {
 	@Override
 	public boolean collide(Entity e) {
 		// TODO: xử lý khi FlameSegment va chạm với Character
+		if (e instanceof Bomb){
+			if (e.getX() == _x && e.getY() == _y)
+			((Bomb) e).explode();
+		}
 		if (e instanceof LayeredEntity){
 			e = ((LayeredEntity) e).getTopEntity();
 		}
