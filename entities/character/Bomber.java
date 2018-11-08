@@ -5,6 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.character.enemy.Enemy;
 import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -216,11 +217,14 @@ public class Bomber extends Character {
         }
         System.out.println(getTileX() + " " + getTileY());
         Entity entity = this._board.getEntityAt(getTileX(),getTileY());
-        if (entity instanceof  LayeredEntity){
+        if (entity instanceof  LayeredEntity) {
             entity = ((LayeredEntity) entity).getTopEntity();
             if (entity instanceof Item)
                 entity.collide(this);
         }
+        if ((_board.getCharacterAtExcluding(getTileX(),getTileY(),this) instanceof Enemy))
+            kill();
+
     }
 
     @Override
