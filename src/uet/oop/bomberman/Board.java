@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -33,7 +34,8 @@ public class Board implements IRender {
 	private List<Message> _messages = new ArrayList<>();
 	
 	private int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
-	
+
+	private Portal portal;
 	private int _time = Game.TIME;
 	private int _points = Game.POINTS;
 	
@@ -108,6 +110,12 @@ public class Board implements IRender {
 	protected void detectEndGame() {
 		if(_time <= 0)
 			endGame();
+		if (detectNoEnemies())
+			System.out.println("lamao");
+		System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
+		if (detectNoEnemies() && getBomber().getTileX() == portal.getX()
+			&& getBomber().getTileY() == portal.getY())
+			nextLevel();
 	}
 	
 	public void endGame() {
@@ -314,6 +322,10 @@ public class Board implements IRender {
 
 	public Keyboard getInput() {
 		return _input;
+	}
+
+	public void setPortal(Portal portal) {
+		this.portal = portal;
 	}
 
 	public LevelLoader getLevel() {

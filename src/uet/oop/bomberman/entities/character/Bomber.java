@@ -83,7 +83,7 @@ public class Bomber extends Character {
         if (_input.space) {
             if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10) {
 
-                System.out.println(_timeBetweenPutBombs + "   "  +Game.getBombRate());
+                System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
                 placeBomb(Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1), Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1));
                 _timeBetweenPutBombs = 0;
                 Game.addBombRate(-1);
@@ -148,12 +148,12 @@ public class Bomber extends Character {
         } else {
             this._moving = true;
             System.out.println(Game.getBomberSpeedV2());
-                double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
-                double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
-                move(nextX, nextY);
-                nextX = this.getX() + dx[this._direction] * Game.getBomberSpeedV2();
-                nextY = this.getY() + dy[this._direction] * Game.getBomberSpeedV2();
-                move(nextX,nextY);
+            double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
+            double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
+            move(nextX, nextY);
+            nextX = this.getX() + dx[this._direction] * Game.getBomberSpeedV2();
+            nextY = this.getY() + dy[this._direction] * Game.getBomberSpeedV2();
+            move(nextX, nextY);
         }
         // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
@@ -165,17 +165,17 @@ public class Bomber extends Character {
         //System.out.println("" + x +" " + y);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
-                if(this._direction == 0){
-                    if(!((i == 0 && j == 0) || (i == 1 && j == 0))) continue;
+                if (this._direction == 0) {
+                    if (!((i == 0 && j == 0) || (i == 1 && j == 0))) continue;
                 }
-                if(this._direction == 1){
-                    if(!((i == 1 && j == 1) || (i == 1 && j == 0))) continue;
+                if (this._direction == 1) {
+                    if (!((i == 1 && j == 1) || (i == 1 && j == 0))) continue;
                 }
-                if(this._direction == 2){
-                    if(!((i == 1 && j == 1) || (i == 0 && j == 1))) continue;
+                if (this._direction == 2) {
+                    if (!((i == 1 && j == 1) || (i == 0 && j == 1))) continue;
                 }
-                if(this._direction == 3){
-                    if(!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
+                if (this._direction == 3) {
+                    if (!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
                 }
                 int curTileX = Coordinates.pixelToTile(x + i * (3.0) / (4.0) * (Game.TILES_SIZE - 1));
                 int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
@@ -183,11 +183,11 @@ public class Bomber extends Character {
                 Entity entity = this._board.getEntityAt(curTileX, curTileY);
                 if (entity.getSprite() == Sprite.brick ||
                         entity.getSprite() == Sprite.wall ||
-                        ((entity instanceof LayeredEntity)&&
-                        ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick))
+                        ((entity instanceof LayeredEntity) &&
+                                ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick))
                     return false;
                 Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
-                if(thisBomb != null && thisBomb.collide(this) == true)
+                if (thisBomb != null && thisBomb.collide(this) == true)
                     return false;
             }
         }
@@ -220,13 +220,13 @@ public class Bomber extends Character {
             this._y = ya + dy[nextDir] * Game.getBomberSpeed();
         }
         //System.out.println(getTileX() + " " + getTileY());
-        Entity entity = this._board.getEntityAt(getTileX(),getTileY());
-        if (entity instanceof  LayeredEntity) {
+        Entity entity = this._board.getEntityAt(getTileX(), getTileY());
+        if (entity instanceof LayeredEntity) {
             entity = ((LayeredEntity) entity).getTopEntity();
             if (entity instanceof Item)
                 entity.collide(this);
         }
-        if ((_board.getCharacterAtExcluding(getTileX(),getTileY(),this) instanceof Enemy))
+        if ((_board.getCharacterAtExcluding(getTileX(), getTileY(), this) instanceof Enemy))
             kill();
 
     }

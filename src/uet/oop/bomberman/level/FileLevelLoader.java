@@ -95,7 +95,7 @@ public class FileLevelLoader extends LevelLoader {
 					_board.addEntity(xI + yI * _width,
 							new LayeredEntity(xI, yI,
 									new Grass(xI ,yI, Sprite.grass),
-									new BombItem(xI, yI, Sprite.powerup_flames),
+									new BombItem(xI, yI, Sprite.powerup_bombs),
 									new Brick(xI, yI, Sprite.brick)
 							)
 					);
@@ -115,7 +115,7 @@ public class FileLevelLoader extends LevelLoader {
 					_board.addEntity(xI + yI * _width,
 							new LayeredEntity(xI, yI,
 									new Grass(xI ,yI, Sprite.grass),
-									new SpeedItem(xI, yI, Sprite.powerup_flames),
+									new SpeedItem(xI, yI, Sprite.powerup_speed),
 									new Brick(xI, yI, Sprite.brick)
 							)
 					);
@@ -132,6 +132,7 @@ public class FileLevelLoader extends LevelLoader {
 					int xI = j;
 					int yI = i;
 					int pos = xI + yI * _width;
+					_board.setPortal(new Portal(xI,yI,Sprite.portal));
 					_board.addEntity(pos, new LayeredEntity(xI, yI,
 							new Grass(xI ,yI, Sprite.grass),
 							new Portal(xI, yI, Sprite.portal),

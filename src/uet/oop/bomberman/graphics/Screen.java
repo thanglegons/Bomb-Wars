@@ -107,6 +107,8 @@ public class Screen {
 		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
 		g.setFont(font);
 		g.setColor(Color.white);
+		if (level == 2)
+			System.out.println("ok");
 		drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
 		
 	}
