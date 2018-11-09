@@ -83,7 +83,10 @@ public class Bomb extends AnimatedEntitiy {
 		_flames = new Flame[4];
 		//Entity entity_test = this._board.getEntityAt(0,0);
 		// TODO: xử lý khi Character đứng tại vị trí Bomb
-
+		Bomber bomber = _board.getBomber();
+		if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
+			(bomber).kill();
+		}
 		// TODO: tạo các Flame
 		for (int i=0;i<4;i++){
 			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, Game.getBombRadius(),this._board);
