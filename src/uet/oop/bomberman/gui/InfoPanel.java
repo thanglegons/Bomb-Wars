@@ -12,6 +12,7 @@ public class InfoPanel extends JPanel {
 	
 	private JLabel timeLabel;
 	private JLabel pointsLabel;
+	private JLabel shieldLabel;
 
 	public InfoPanel(Game game) {
 		setLayout(new GridLayout());
@@ -19,13 +20,18 @@ public class InfoPanel extends JPanel {
 		timeLabel = new JLabel("Time: " + game.getBoard().getTime());
 		timeLabel.setForeground(Color.white);
 		timeLabel.setHorizontalAlignment(JLabel.CENTER);
-		
+
+		shieldLabel = new JLabel("Shield: " + Game.isShield());
+		shieldLabel.setForeground(Color.red);
+		shieldLabel.setHorizontalAlignment(JLabel.CENTER);
+
 		pointsLabel = new JLabel("Points: " + game.getBoard().getPoints());
 		pointsLabel.setForeground(Color.white);
 		pointsLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		add(timeLabel);
 		add(pointsLabel);
+		add(shieldLabel);
 		
 		setBackground(Color.black);
 		setPreferredSize(new Dimension(0, 40));
@@ -37,6 +43,12 @@ public class InfoPanel extends JPanel {
 
 	public void setPoints(int t) {
 		pointsLabel.setText("Score: " + t);
+	}
+
+	public void setShield(boolean b) {
+		if (b) shieldLabel.setForeground(Color.cyan);
+		else shieldLabel.setForeground(Color.red);
+		shieldLabel.setText("Shield :" + b);
 	}
 	
 }

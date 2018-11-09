@@ -37,6 +37,8 @@ public class Game extends Canvas {
 	protected static double bomberSpeed = BOMBERSPEED;
 	protected static double bomberSpeedV2 = 0;
 
+	protected static boolean shield = false;
+
 	protected int _screenDelay = SCREENDELAY;
 
 	private Keyboard _input;
@@ -141,6 +143,7 @@ public class Game extends Canvas {
 
 
 			frames++;
+			_frame.setShield(Game.isShield());
 			if(System.currentTimeMillis() - timer > 1000) {
 				_frame.setTime(_board.subtractTime());
 				_frame.setPoints(_board.getPoints());
@@ -201,5 +204,13 @@ public class Game extends Canvas {
 
 	public static void setBomberSpeedV2(double bomberSpeedV2) {
 		Game.bomberSpeedV2 = bomberSpeedV2;
+	}
+
+	public static boolean isShield() {
+		return shield;
+	}
+
+	public static void setShield(boolean shield) {
+		Game.shield = shield;
 	}
 }

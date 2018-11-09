@@ -27,6 +27,7 @@ public class Bomber extends Character {
     private List<Bomb> _bombs;
     private int[] dx = new int[]{0, 1, 0, -1};
     private int[] dy = new int[]{-1, 0, 1, 0};
+    private int invulnerableTime = 0;
 
     public Bomber(int x, int y, Board board) {
         super(x, y, board);
@@ -51,6 +52,7 @@ public class Bomber extends Character {
         //if (_timeBetweenPutBombs >= 7500) _timeBetweenPutBombs = 0;
         //else _timeBetweenPutBombs--;
         _timeBetweenPutBombs--;
+        invulnerableTime--;
         animate();
 
         calculateMove();
@@ -122,6 +124,11 @@ public class Bomber extends Character {
 
     @Override
     public void kill() {
+        if (Game.isShield()){
+            Game.setShield(false);
+            invulnerableTime = 10;
+        }
+        if (invulnerableTime > 0) return;
         if (!_alive) return;
         _alive = false;
     }
