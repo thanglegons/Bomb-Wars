@@ -13,6 +13,7 @@ public class Frame extends JFrame {
 	public GamePanel _gamepane;
 	private JPanel _containerpane;
 	private InfoPanel _infopanel;
+	private ItemPanel _itempanel;
 	
 	private Game _game;
 
@@ -21,9 +22,11 @@ public class Frame extends JFrame {
 		_containerpane = new JPanel(new BorderLayout());
 		_gamepane = new GamePanel(this);
 		_infopanel = new InfoPanel(_gamepane.getGame());
+		_itempanel = new ItemPanel();
 		
 		_containerpane.add(_infopanel, BorderLayout.PAGE_START);
-		_containerpane.add(_gamepane, BorderLayout.PAGE_END);
+		_containerpane.add(_gamepane, BorderLayout.CENTER);
+		_containerpane.add(_itempanel,BorderLayout.PAGE_END);
 		
 		_game = _gamepane.getGame();
 		
@@ -47,11 +50,11 @@ public class Frame extends JFrame {
 	}
 
 	public void setShield(boolean shield){
-		_infopanel.setShield(shield);
+		_itempanel.setShield(shield);
 	}
 
 	public void setWallpass(int t){
-		_infopanel.setWallpassLabel(t);
+		_itempanel.setWallpassLabel(t);
 	}
 	
 }
