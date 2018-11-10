@@ -9,10 +9,7 @@ import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
-import uet.oop.bomberman.entities.tile.item.BombItem;
-import uet.oop.bomberman.entities.tile.item.FlameItem;
-import uet.oop.bomberman.entities.tile.item.ShieldItem;
-import uet.oop.bomberman.entities.tile.item.SpeedItem;
+import uet.oop.bomberman.entities.tile.item.*;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
@@ -130,7 +127,18 @@ public class FileLevelLoader extends LevelLoader {
                                     new Brick(xI, yI, Sprite.brick)
                             )
                     );
-                } else if (this._map[i][j] == '#') {
+                } else if (this._map[i][j] == 'w') {
+                    // Add WallpassItem
+                    int xI = j, yI = i;
+                    _board.addEntity(xI + yI * _width,
+                            new LayeredEntity(xI, yI,
+                                    new Grass(xI, yI, Sprite.grass),
+                                    new WallpassItem(xI, yI, Sprite.powerup_wallpass),
+                                    new Brick(xI, yI, Sprite.brick)
+                            )
+                    );
+                }
+                else if (this._map[i][j] == '#') {
                     // Add Wall
                     int pos = j + i * _width;
                     _board.addEntity(pos, new Grass(j, i, Sprite.wall));

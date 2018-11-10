@@ -50,7 +50,7 @@ public class Board implements IRender {
 	@Override
 	public void update() {
 		if( _game.isPaused() ) return;
-		
+
 		updateEntities();
 		updateCharacters();
 		updateBombs();
@@ -112,7 +112,8 @@ public class Board implements IRender {
 			endGame();
 		if (detectNoEnemies())
 			System.out.println("lamao");
-		System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
+		System.out.println(Game.getWallpassDuration());
+		//System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
 		if (detectNoEnemies() && getBomber().getTileX() == portal.getX()
 			&& getBomber().getTileY() == portal.getY())
 			nextLevel();

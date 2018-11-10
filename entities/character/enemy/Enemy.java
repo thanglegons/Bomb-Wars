@@ -7,9 +7,11 @@ import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.Message;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.entities.character.enemy.ai.AI;
+import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
@@ -45,11 +47,18 @@ public abstract class Enemy extends Character {
 		_timeAfter = 20;
 		_deadSprite = dead;
 	}
-	
+
+	private void checkCollision() {
+		FlameSegment flameSegment = _board.getFlameSegmentAt(getTileX(), getTileY());
+		if (flameSegment != null) {
+			flameSegment.collide(this);
+		}
+	}
+
 	@Override
 	public void update() {
 		animate();
-		
+		checkCollision();
 		if(!_alive) {
 			afterKill();
 			return;

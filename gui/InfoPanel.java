@@ -13,6 +13,7 @@ public class InfoPanel extends JPanel {
 	private JLabel timeLabel;
 	private JLabel pointsLabel;
 	private JLabel shieldLabel;
+	private JLabel wallpassLabel;
 
 	public InfoPanel(Game game) {
 		setLayout(new GridLayout());
@@ -25,6 +26,10 @@ public class InfoPanel extends JPanel {
 		shieldLabel.setForeground(Color.red);
 		shieldLabel.setHorizontalAlignment(JLabel.CENTER);
 
+		wallpassLabel = new JLabel("Wallpass: " + Game.getWallpassDuration()/1000);
+		wallpassLabel.setForeground(Color.green);
+		wallpassLabel.setHorizontalAlignment(JLabel.CENTER);
+
 		pointsLabel = new JLabel("Points: " + game.getBoard().getPoints());
 		pointsLabel.setForeground(Color.white);
 		pointsLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -32,6 +37,7 @@ public class InfoPanel extends JPanel {
 		add(timeLabel);
 		add(pointsLabel);
 		add(shieldLabel);
+		add(wallpassLabel);
 		
 		setBackground(Color.black);
 		setPreferredSize(new Dimension(0, 40));
@@ -50,5 +56,7 @@ public class InfoPanel extends JPanel {
 		else shieldLabel.setForeground(Color.red);
 		shieldLabel.setText("Shield :" + b);
 	}
-	
+	public void setWallpassLabel(int t){
+		wallpassLabel.setText("Wallpass: " + t);
+	}
 }

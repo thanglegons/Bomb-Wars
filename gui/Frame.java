@@ -49,5 +49,9 @@ public class Frame extends JFrame {
 	public void setShield(boolean shield){
 		_infopanel.setShield(shield);
 	}
+
+	public void setWallpass(int t){
+		_infopanel.setWallpassLabel(t);
+	}
 	
 }

@@ -37,7 +37,7 @@ public class Bomber extends Character {
         _sprite = Sprite.player_right;
     }
 
-    private void checkCollision(){
+    private void checkCollision() {
         Entity entity = this._board.getEntityAt(getTileX(), getTileY());
         if (entity instanceof LayeredEntity) {
             entity = ((LayeredEntity) entity).getTopEntity();
@@ -46,8 +46,8 @@ public class Bomber extends Character {
         }
         if ((_board.getCharacterAtExcluding(getTileX(), getTileY(), this) instanceof Enemy))
             kill();
-        FlameSegment flameSegment =_board.getFlameSegmentAt(getTileX(),getTileY());
-        if (flameSegment!=null){
+        FlameSegment flameSegment = _board.getFlameSegmentAt(getTileX(), getTileY());
+        if (flameSegment != null) {
             flameSegment.collide(this);
         }
     }
@@ -69,6 +69,7 @@ public class Bomber extends Character {
         //else _timeBetweenPutBombs--;
         _timeBetweenPutBombs--;
         invulnerableTime--;
+        Game.decreaseWallpassDuration();
         animate();
 
         calculateMove();
@@ -99,11 +100,17 @@ public class Bomber extends Character {
      * Kiểm tra xem có đặt được bom hay không? nếu có thì đặt bom tại vị trí hiện tại của Bomber
      */
 
+    boolean checkBrick(Entity entity){
+        return ((entity instanceof LayeredEntity) &&
+                ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick);
+    }
+
     private void detectPlaceBomb() {
         if (_input.space) {
-            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10) {
+            Entity entity = this._board.getEntityAt(getTileX(),getTileY());
+            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10 && !checkBrick(entity)) {
 
-                System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
+                //System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
                 placeBomb(Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1), Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1));
                 _timeBetweenPutBombs = 0;
                 Game.addBombRate(-1);
@@ -142,7 +149,7 @@ public class Bomber extends Character {
 
     @Override
     public void kill() {
-        if (Game.isShield()){
+        if (Game.isShield()) {
             Game.setShield(false);
             invulnerableTime = 10;
         }
@@ -172,7 +179,7 @@ public class Bomber extends Character {
             this._direction = preDi;
         } else {
             this._moving = true;
-            System.out.println(Game.getBomberSpeedV2());
+            //System.out.println(Game.getBomberSpeedV2());
             double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
             double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
             move(nextX, nextY);
@@ -206,10 +213,14 @@ public class Bomber extends Character {
                 int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
                 //System.out.println("" + curTileX +" " + curTileY);
                 Entity entity = this._board.getEntityAt(curTileX, curTileY);
-                if (entity.getSprite() == Sprite.brick ||
-                        entity.getSprite() == Sprite.wall ||
-                        ((entity instanceof LayeredEntity) &&
-                                ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick))
+                Entity preEntity = this._board.getEntityAt(getTileX(), getTileY());
+                if (Game.getWallpassDuration() == 0 && !(checkBrick(preEntity))) {
+                    if (entity.getSprite() == Sprite.brick ||
+                            entity.getSprite() == Sprite.wall || checkBrick(entity)
+                            )
+                        return false;
+                }
+                else if (entity.getSprite() == Sprite.wall)
                     return false;
                 Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
                 if (thisBomb != null && thisBomb.collide(this) == true)
