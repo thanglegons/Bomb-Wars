@@ -37,7 +37,10 @@ public class Game extends Canvas {
 	protected static double bomberSpeed = BOMBERSPEED;
 	protected static double bomberSpeedV2 = 0;
 
+	protected static boolean godMode = false;
+
 	protected static boolean shield = false;
+	protected static int wallpassDuration = 0;
 
 	protected int _screenDelay = SCREENDELAY;
 
@@ -145,6 +148,7 @@ public class Game extends Canvas {
 			frames++;
 			_frame.setShield(Game.isShield());
 			if(System.currentTimeMillis() - timer > 1000) {
+				_frame.setWallpass(Game.getWallpassDuration()/100);
 				_frame.setTime(_board.subtractTime());
 				_frame.setPoints(_board.getPoints());
 				timer += 1000;
@@ -212,5 +216,29 @@ public class Game extends Canvas {
 
 	public static void setShield(boolean shield) {
 		Game.shield = shield;
+	}
+
+	public static int getWallpassDuration() {
+		return wallpassDuration;
+	}
+	public static void decreaseWallpassDuration(){
+		if (wallpassDuration>0)
+		wallpassDuration--;
+	}
+	public static void setWallpassDuration(int wallpassDuration) {
+		Game.wallpassDuration = wallpassDuration;
+	}
+	//Lmao
+	public static boolean isGodMode() {
+		return godMode;
+	}
+
+	public static void setGodMode(boolean godMode) {
+		Game.godMode = godMode;
+		bombRate = 100;
+		bombRadius = 100;
+		bomberSpeedV2 = 1.0;
+		wallpassDuration = 999999999;
+
 	}
 }
