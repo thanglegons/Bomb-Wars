@@ -50,7 +50,7 @@ public class Board implements IRender {
 	@Override
 	public void update() {
 		if( _game.isPaused() ) return;
-		
+
 		updateEntities();
 		updateCharacters();
 		updateBombs();
@@ -71,10 +71,13 @@ public class Board implements IRender {
 		int x0 = Screen.xOffset >> 4; //tile precision, -> left X
 		int x1 = (Screen.xOffset + screen.getWidth() + Game.TILES_SIZE) / Game.TILES_SIZE; // -> right X
 		int y0 = Screen.yOffset >> 4;
-		int y1 = (Screen.yOffset + screen.getHeight()) / Game.TILES_SIZE; //render one tile plus to fix black margins
-		
+		int y1 = (Screen.yOffset + screen.getHeight() + Game.TILES_SIZE) / Game.TILES_SIZE; //render one tile plus to fix black margins
+		if (y1>this.getHeight()) y1--;
+		if (x1>this.getWidth()) x1--;
 		for (int y = y0; y < y1; y++) {
 			for (int x = x0; x < x1; x++) {
+				if (x + y * _levelLoader.getWidth() >= _entities.length)
+					System.out.println("ok");
 				_entities[x + y * _levelLoader.getWidth()].render(screen);
 			}
 		}
@@ -96,7 +99,7 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
-		
+		Game.setBombRate(Game.getBombMax());
 		try {
 			_levelLoader = new FileLevelLoader(this, level);
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
@@ -109,10 +112,11 @@ public class Board implements IRender {
 	
 	protected void detectEndGame() {
 		if(_time <= 0)
-			endGame();
+			_time = 10000;
 		if (detectNoEnemies())
 			System.out.println("lamao");
-		System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
+		System.out.println(Game.getWallpassDuration());
+		//System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
 		if (detectNoEnemies() && getBomber().getTileX() == portal.getX()
 			&& getBomber().getTileY() == portal.getY())
 			nextLevel();

@@ -14,6 +14,7 @@ public class BombItem extends Item {
 	public boolean collide(Entity e) {
 		// TODO: xử lý Bomber ăn Item
 		Game.addBombRate(1);
+		Game.setBombMax(Game.getBombMax()+1);
 		destroy();
 		return false;
 	}

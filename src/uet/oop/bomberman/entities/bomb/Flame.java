@@ -1,10 +1,12 @@
 package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -81,13 +83,21 @@ public class Flame extends Entity {
             int x = xOrigin + i * dx[_direction];
             int y = yOrigin + i * dy[_direction];
             Entity entity = this._board.getEntityAt(xOrigin + i * dx[_direction], yOrigin + i * dy[_direction]);
-            if (entity.getSprite() == Sprite.wall ||
-                    (entity instanceof LayeredEntity && ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick)) {
-                if (!(entity.getSprite() == Sprite.wall)){
-                    ((LayeredEntity) entity).getTopEntity().collide(entity);
+            if (!Game.isSuperbomb()) {
+                if (entity.getSprite() == Sprite.wall ||
+                        (entity instanceof LayeredEntity && ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick)) {
+                    if (!(entity.getSprite() == Sprite.wall)) {
+                        ((LayeredEntity) entity).getTopEntity().collide(entity);
+                    }
+                    permittedLength = i;
+                    return i;
                 }
-                permittedLength = i;
-                return i;
+            }
+            else{
+                if (entity instanceof Wall && ((Wall) entity).isBorder()) {
+                    permittedLength = i;
+                    return i;
+                }
             }
         }
         permittedLength = _radius;

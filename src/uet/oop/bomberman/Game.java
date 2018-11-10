@@ -32,6 +32,7 @@ public class Game extends Canvas {
 
 	protected static int SCREENDELAY = 3;
 
+	protected static int bombMax = BOMBRATE;
 	protected static int bombRate = BOMBRATE;
 	protected static int bombRadius = BOMBRADIUS;
 	protected static double bomberSpeed = BOMBERSPEED;
@@ -39,6 +40,7 @@ public class Game extends Canvas {
 
 	protected static boolean godMode = false;
 
+	protected static boolean superbomb = false;
 	protected static boolean shield = false;
 	protected static int wallpassDuration = 0;
 
@@ -174,6 +176,10 @@ public class Game extends Canvas {
 		return bombRadius;
 	}
 
+	public static void setBombRate(int bombRate) {
+		Game.bombRate = bombRate;
+	}
+
 	public static void addBomberSpeed(double i) {
 		bomberSpeed += i;
 	}
@@ -234,11 +240,29 @@ public class Game extends Canvas {
 	}
 
 	public static void setGodMode(boolean godMode) {
-		Game.godMode = godMode;
-		bombRate = 100;
-		bombRadius = 100;
-		bomberSpeedV2 = 1.0;
-		wallpassDuration = 999999999;
+		if (godMode) {
+			Game.godMode = godMode;
+			bombRate = 100;
+			bombRadius = 100;
+			bomberSpeedV2 = 1.0;
+			wallpassDuration = 999999999;
+		}
 
+	}
+
+	public static int getBombMax() {
+		return bombMax;
+	}
+
+	public static void setBombMax(int bombMax) {
+		Game.bombMax = bombMax;
+	}
+
+	public static boolean isSuperbomb() {
+		return superbomb;
+	}
+
+	public static void setSuperbomb(boolean superbomb) {
+		Game.superbomb = superbomb;
 	}
 }

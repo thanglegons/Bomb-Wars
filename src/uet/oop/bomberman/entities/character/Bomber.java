@@ -5,7 +5,9 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -36,6 +38,21 @@ public class Bomber extends Character {
         _sprite = Sprite.player_right;
     }
 
+    private void checkCollision() {
+        Entity entity = this._board.getEntityAt(getTileX(), getTileY());
+        if (entity instanceof LayeredEntity) {
+            entity = ((LayeredEntity) entity).getTopEntity();
+            if (entity instanceof Item)
+                entity.collide(this);
+        }
+        if ((_board.getCharacterAtExcluding(getTileX(), getTileY(), this) instanceof Enemy))
+            kill();
+        FlameSegment flameSegment = _board.getFlameSegmentAt(getTileX(), getTileY());
+        if (flameSegment != null) {
+            flameSegment.collide(this);
+        }
+    }
+
     @Override
     public void update() {
         clearBombs();
@@ -53,11 +70,14 @@ public class Bomber extends Character {
         //else _timeBetweenPutBombs--;
         _timeBetweenPutBombs--;
         invulnerableTime--;
+        Game.decreaseWallpassDuration();
         animate();
 
         calculateMove();
 
         detectPlaceBomb();
+
+        checkCollision();
     }
 
     @Override
@@ -74,18 +94,26 @@ public class Bomber extends Character {
 
     public void calculateXOffset() {
         int xScroll = Screen.calculateXOffset(_board, this);
-        Screen.setOffset(xScroll, 0);
+        int yScroll = Screen.calculateYOffset(_board,this);
+        Screen.setOffset(xScroll, yScroll);
     }
 
     /**
      * Kiểm tra xem có đặt được bom hay không? nếu có thì đặt bom tại vị trí hiện tại của Bomber
      */
 
+    boolean checkBrick(Entity entity){
+        return  ((entity instanceof LayeredEntity) &&
+                ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick);
+
+    }
+
     private void detectPlaceBomb() {
         if (_input.space) {
-            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10) {
+            Entity entity = this._board.getEntityAt(getTileX(),getTileY());
+            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10 && !checkBrick(entity) && !(entity instanceof Wall)) {
 
-                System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
+                //System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
                 placeBomb(Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1), Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1));
                 _timeBetweenPutBombs = 0;
                 Game.addBombRate(-1);
@@ -124,7 +152,9 @@ public class Bomber extends Character {
 
     @Override
     public void kill() {
-        if (Game.isShield()){
+        if (Game.isGodMode())
+            return;
+        if (Game.isShield()) {
             Game.setShield(false);
             invulnerableTime = 10;
         }
@@ -154,7 +184,7 @@ public class Bomber extends Character {
             this._direction = preDi;
         } else {
             this._moving = true;
-            System.out.println(Game.getBomberSpeedV2());
+            //System.out.println(Game.getBomberSpeedV2());
             double nextX = this.getX() + dx[this._direction] * Game.getBomberSpeed();
             double nextY = this.getY() + dy[this._direction] * Game.getBomberSpeed();
             move(nextX, nextY);
@@ -188,13 +218,17 @@ public class Bomber extends Character {
                 int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
                 //System.out.println("" + curTileX +" " + curTileY);
                 Entity entity = this._board.getEntityAt(curTileX, curTileY);
-                if (entity.getSprite() == Sprite.brick ||
-                        entity.getSprite() == Sprite.wall ||
-                        ((entity instanceof LayeredEntity) &&
-                                ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick))
-                    return false;
-                Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
-                if (thisBomb != null && thisBomb.collide(this) == true)
+                Entity preEntity = this._board.getEntityAt(getTileX(), getTileY());
+                if (Game.getWallpassDuration() == 0 && !(checkBrick(preEntity))) {
+                    if (entity.getSprite() == Sprite.brick ||
+                            entity.getSprite() == Sprite.wall || checkBrick(entity)
+                            )
+                        return false;
+                    Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
+                    if (thisBomb != null && thisBomb.collide(this) == true)
+                        return false;
+                }
+                else if (entity instanceof Wall && ((Wall) entity).isBorder())
                     return false;
             }
         }
@@ -227,15 +261,6 @@ public class Bomber extends Character {
             this._y = ya + dy[nextDir] * Game.getBomberSpeed();
         }
         //System.out.println(getTileX() + " " + getTileY());
-        Entity entity = this._board.getEntityAt(getTileX(), getTileY());
-        if (entity instanceof LayeredEntity) {
-            entity = ((LayeredEntity) entity).getTopEntity();
-            if (entity instanceof Item)
-                entity.collide(this);
-        }
-        if ((_board.getCharacterAtExcluding(getTileX(), getTileY(), this) instanceof Enemy))
-            kill();
-
     }
 
     @Override

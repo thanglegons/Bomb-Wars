@@ -75,13 +75,33 @@ public class Screen {
 		
 		double BomberX = bomber.getX() / 16;
 		double complement = 0.5;
-		int firstBreakpoint = board.getWidth() / 4;
+		/*int firstBreakpoint = board.getWidth() / 4;
+		int lastBreakpoint = board.getWidth() - firstBreakpoint;*/
+		int firstBreakpoint = (Game.WIDTH / 16)/2;
 		int lastBreakpoint = board.getWidth() - firstBreakpoint;
-		
 		if( BomberX > firstBreakpoint + complement && BomberX < lastBreakpoint - complement) {
 			temp = (int)bomber.getX()  - (Game.WIDTH / 2);
-		}
+		} else if (BomberX >= lastBreakpoint - complement)
+			temp = (int)(((double)lastBreakpoint - complement)*16) - (Game.WIDTH/2);
 		
+		return temp;
+	}
+
+	public static int calculateYOffset(Board board, Bomber bomber) {
+		if(bomber == null) return 0;
+		int temp = yOffset;
+
+		double BomberY = bomber.getY() / 16;
+		double complement = 0.5;
+		/*int firstBreakpoint = board.getWidth() / 4;
+		int lastBreakpoint = board.getWidth() - firstBreakpoint;*/
+		int firstBreakpoint = (Game.HEIGHT / 16)/2;
+		int lastBreakpoint = board.getHeight() - firstBreakpoint;
+		if( BomberY > firstBreakpoint + complement && BomberY < lastBreakpoint - complement) {
+			temp = (int)bomber.getY()  - (Game.HEIGHT / 2);
+		} else if (BomberY >= lastBreakpoint - complement)
+			temp = (int)(((double)lastBreakpoint - complement)*16) - (Game.HEIGHT/2);
+
 		return temp;
 	}
 	
