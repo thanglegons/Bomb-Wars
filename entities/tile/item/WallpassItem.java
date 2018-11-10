@@ -14,7 +14,7 @@ public class WallpassItem extends Item {
     @Override
     public boolean collide(Entity e) {
         // TODO: xử lý Bomber ăn Item
-        Game.setWallpassDuration(3000);
+        Game.setWallpassDuration(1500);
         destroy();
         return false;
     }

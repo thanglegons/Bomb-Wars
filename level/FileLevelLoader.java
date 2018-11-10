@@ -8,6 +8,7 @@ import uet.oop.bomberman.entities.character.enemy.Balloon;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
+import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.entities.tile.item.*;
 import uet.oop.bomberman.exceptions.LoadLevelException;
@@ -137,11 +138,13 @@ public class FileLevelLoader extends LevelLoader {
                                     new Brick(xI, yI, Sprite.brick)
                             )
                     );
-                }
-                else if (this._map[i][j] == '#') {
+                } else if (this._map[i][j] == '#') {
                     // Add Wall
                     int pos = j + i * _width;
-                    _board.addEntity(pos, new Grass(j, i, Sprite.wall));
+                    if (i == this._height - 1 || j == this._width - 1 || i == 0 || j == 0)
+                        _board.addEntity(pos, new Wall(j, i, Sprite.wall, true));
+                    else
+                        _board.addEntity(pos, new Wall(j, i, Sprite.wall));
                 } else if (this._map[i][j] == ' ') {
                     // Add Grass
                     int pos = j + i * _width;

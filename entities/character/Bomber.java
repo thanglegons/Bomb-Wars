@@ -7,6 +7,7 @@ import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
+import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
@@ -101,14 +102,15 @@ public class Bomber extends Character {
      */
 
     boolean checkBrick(Entity entity){
-        return ((entity instanceof LayeredEntity) &&
+        return  ((entity instanceof LayeredEntity) &&
                 ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick);
+
     }
 
     private void detectPlaceBomb() {
         if (_input.space) {
             Entity entity = this._board.getEntityAt(getTileX(),getTileY());
-            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10 && !checkBrick(entity)) {
+            if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10 && !checkBrick(entity) && !(entity instanceof Wall)) {
 
                 //System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
                 placeBomb(Coordinates.pixelToTile(this.getX() + Game.TILES_SIZE / 2 - 1), Coordinates.pixelToTile(this.getY() - Game.TILES_SIZE / 2 - 1));
@@ -221,11 +223,11 @@ public class Bomber extends Character {
                             entity.getSprite() == Sprite.wall || checkBrick(entity)
                             )
                         return false;
+                    Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
+                    if (thisBomb != null && thisBomb.collide(this) == true)
+                        return false;
                 }
-                else if (entity.getSprite() == Sprite.wall)
-                    return false;
-                Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
-                if (thisBomb != null && thisBomb.collide(this) == true)
+                else if (entity instanceof Wall && ((Wall) entity).isBorder())
                     return false;
             }
         }
