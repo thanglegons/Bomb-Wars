@@ -37,6 +37,8 @@ public class Game extends Canvas {
 	protected static double bomberSpeed = BOMBERSPEED;
 	protected static double bomberSpeedV2 = 0;
 
+	protected static boolean godMode = false;
+
 	protected static boolean shield = false;
 	protected static int wallpassDuration = 0;
 
@@ -225,5 +227,13 @@ public class Game extends Canvas {
 	}
 	public static void setWallpassDuration(int wallpassDuration) {
 		Game.wallpassDuration = wallpassDuration;
+	}
+	//Lmao
+	public static boolean isGodMode() {
+		return godMode;
+	}
+
+	public static void setGodMode(boolean godMode) {
+		Game.godMode = godMode;
 	}
 }

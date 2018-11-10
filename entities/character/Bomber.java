@@ -149,6 +149,8 @@ public class Bomber extends Character {
 
     @Override
     public void kill() {
+        if (Game.isGodMode())
+            return;
         if (Game.isShield()) {
             Game.setShield(false);
             invulnerableTime = 10;
