@@ -234,11 +234,13 @@ public class Game extends Canvas {
 	}
 
 	public static void setGodMode(boolean godMode) {
-		Game.godMode = godMode;
-		bombRate = 100;
-		bombRadius = 100;
-		bomberSpeedV2 = 1.0;
-		wallpassDuration = 999999999;
+		if (godMode) {
+			Game.godMode = godMode;
+			bombRate = 100;
+			bombRadius = 100;
+			bomberSpeedV2 = 1.0;
+			wallpassDuration = 999999999;
+		}
 
 	}
 }
