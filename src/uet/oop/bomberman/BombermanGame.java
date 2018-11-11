@@ -6,6 +6,7 @@ public class BombermanGame {
 	
 	public static void main(String[] args) {
 		Game.setGodMode(false);
+		//Game.setShield(true);
 		new Frame();
 	}
 }

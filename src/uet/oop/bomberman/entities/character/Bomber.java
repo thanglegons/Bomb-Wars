@@ -69,6 +69,7 @@ public class Bomber extends Character {
         //if (_timeBetweenPutBombs >= 7500) _timeBetweenPutBombs = 0;
         //else _timeBetweenPutBombs--;
         _timeBetweenPutBombs--;
+        if (invulnerableTime>0)
         invulnerableTime--;
         Game.decreaseWallpassDuration();
         animate();
@@ -94,7 +95,7 @@ public class Bomber extends Character {
 
     public void calculateXOffset() {
         int xScroll = Screen.calculateXOffset(_board, this);
-        int yScroll = Screen.calculateYOffset(_board,this);
+        int yScroll = Screen.calculateYOffset(_board, this);
         Screen.setOffset(xScroll, yScroll);
     }
 
@@ -102,15 +103,15 @@ public class Bomber extends Character {
      * Kiểm tra xem có đặt được bom hay không? nếu có thì đặt bom tại vị trí hiện tại của Bomber
      */
 
-    boolean checkBrick(Entity entity){
-        return  ((entity instanceof LayeredEntity) &&
+    boolean checkBrick(Entity entity) {
+        return ((entity instanceof LayeredEntity) &&
                 ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick);
 
     }
 
     private void detectPlaceBomb() {
         if (_input.space) {
-            Entity entity = this._board.getEntityAt(getTileX(),getTileY());
+            Entity entity = this._board.getEntityAt(getTileX(), getTileY());
             if (Game.getBombRate() > 0 && _timeBetweenPutBombs < -10 && !checkBrick(entity) && !(entity instanceof Wall)) {
 
                 //System.out.println(_timeBetweenPutBombs + "   " + Game.getBombRate());
@@ -156,7 +157,7 @@ public class Bomber extends Character {
             return;
         if (Game.isShield()) {
             Game.setShield(false);
-            invulnerableTime = 10;
+            invulnerableTime = 50;
         }
         if (invulnerableTime > 0) return;
         if (!_alive) return;
@@ -222,13 +223,12 @@ public class Bomber extends Character {
                 if (Game.getWallpassDuration() == 0 && !(checkBrick(preEntity))) {
                     if (entity.getSprite() == Sprite.brick ||
                             entity.getSprite() == Sprite.wall || checkBrick(entity)
-                            )
+                    )
                         return false;
                     Bomb thisBomb = this._board.getBombAt(curTileX, curTileY);
                     if (thisBomb != null && thisBomb.collide(this) == true)
                         return false;
-                }
-                else if (entity instanceof Wall && ((Wall) entity).isBorder())
+                } else if (entity instanceof Wall && ((Wall) entity).isBorder())
                     return false;
             }
         }
@@ -272,37 +272,72 @@ public class Bomber extends Character {
     }
 
     private void chooseSprite() {
-        switch (_direction) {
-            case 0:
-                _sprite = Sprite.player_up;
-                if (_moving) {
-                    _sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, _animate, 20);
-                }
-                break;
-            case 1:
-                _sprite = Sprite.player_right;
-                if (_moving) {
-                    _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
-                }
-                break;
-            case 2:
-                _sprite = Sprite.player_down;
-                if (_moving) {
-                    _sprite = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, _animate, 20);
-                }
-                break;
-            case 3:
-                _sprite = Sprite.player_left;
-                if (_moving) {
-                    _sprite = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, _animate, 20);
-                }
-                break;
-            default:
-                _sprite = Sprite.player_right;
-                if (_moving) {
-                    _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
-                }
-                break;
+        if (!Game.isShield() && invulnerableTime%10 < 5) {
+            switch (_direction) {
+                case 0:
+                    _sprite = Sprite.player_up;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, _animate, 20);
+                    }
+                    break;
+                case 1:
+                    _sprite = Sprite.player_right;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
+                    }
+                    break;
+                case 2:
+                    _sprite = Sprite.player_down;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, _animate, 20);
+                    }
+                    break;
+                case 3:
+                    _sprite = Sprite.player_left;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, _animate, 20);
+                    }
+                    break;
+                default:
+                    _sprite = Sprite.player_right;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
+                    }
+                    break;
+            }
+        } else {
+            switch (_direction) {
+                case 0:
+                    _sprite = Sprite.player_shield_up;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_shield_up_1, Sprite.player_shield_up_2, _animate, 20);
+                    }
+                    break;
+                case 1:
+                    _sprite = Sprite.player_shield_right;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_shield_right_1, Sprite.player_shield_right_2, _animate, 20);
+                    }
+                    break;
+                case 2:
+                    _sprite = Sprite.player_shield_down;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_shield_down_1, Sprite.player_shield_down_2, _animate, 20);
+                    }
+                    break;
+                case 3:
+                    _sprite = Sprite.player_shield_left;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_shield_left_1, Sprite.player_shield_left_2, _animate, 20);
+                    }
+                    break;
+                default:
+                    _sprite = Sprite.player_shield_right;
+                    if (_moving) {
+                        _sprite = Sprite.movingSprite(Sprite.player_shield_right_1, Sprite.player_shield_right_2, _animate, 20);
+                    }
+                    break;
+            }
         }
     }
 }

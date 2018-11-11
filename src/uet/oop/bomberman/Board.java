@@ -113,9 +113,9 @@ public class Board implements IRender {
 	protected void detectEndGame() {
 		if(_time <= 0)
 			_time = 10000;
-		if (detectNoEnemies())
-			System.out.println("lamao");
-		System.out.println(Game.getWallpassDuration());
+		/*if (detectNoEnemies())
+			System.out.println("lamao");*/
+		//System.out.println(Game.getWallpassDuration());
 		//System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
 		if (detectNoEnemies() && getBomber().getTileX() == portal.getX()
 			&& getBomber().getTileY() == portal.getY())

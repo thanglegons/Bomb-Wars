@@ -31,18 +31,35 @@ public class Sprite {
 	public static Sprite player_down = new Sprite(16, 2, 0, SpriteSheet.tiles, 12, 15);
 	public static Sprite player_left = new Sprite(16, 3, 0, SpriteSheet.tiles, 10, 15);
 	public static Sprite player_right = new Sprite(16, 1, 0, SpriteSheet.tiles, 10, 16);
+
+	public static Sprite player_shield_up = new Sprite(16, 0, 12, SpriteSheet.tiles, 12, 16);
+	public static Sprite player_shield_down = new Sprite(16, 2, 12, SpriteSheet.tiles, 12, 15);
+	public static Sprite player_shield_left = new Sprite(16, 3, 12, SpriteSheet.tiles, 10, 15);
+	public static Sprite player_shield_right = new Sprite(16, 1, 12, SpriteSheet.tiles, 10, 16);
 	
 	public static Sprite player_up_1 = new Sprite(16, 0, 1, SpriteSheet.tiles, 12, 16);
 	public static Sprite player_up_2 = new Sprite(16, 0, 2, SpriteSheet.tiles, 12, 15);
+
+	public static Sprite player_shield_up_1 = new Sprite(16, 0, 12+1, SpriteSheet.tiles, 12, 16);
+	public static Sprite player_shield_up_2 = new Sprite(16, 0, 12+2, SpriteSheet.tiles, 12, 15);
 	
 	public static Sprite player_down_1 = new Sprite(16, 2, 1, SpriteSheet.tiles, 12, 15);
 	public static Sprite player_down_2 = new Sprite(16, 2, 2, SpriteSheet.tiles, 12, 16);
+
+	public static Sprite player_shield_down_1 = new Sprite(16, 2, 12+1, SpriteSheet.tiles, 12, 15);
+	public static Sprite player_shield_down_2 = new Sprite(16, 2, 12+2, SpriteSheet.tiles, 12, 16);
 	
 	public static Sprite player_left_1 = new Sprite(16, 3, 1, SpriteSheet.tiles, 11, 16);
 	public static Sprite player_left_2 = new Sprite(16, 3, 2, SpriteSheet.tiles, 12 ,16);
+
+	public static Sprite player_shield_left_1 = new Sprite(16, 3, 12+1, SpriteSheet.tiles, 11, 16);
+	public static Sprite player_shield_left_2 = new Sprite(16, 3, 12+2, SpriteSheet.tiles, 12 ,16);
 	
 	public static Sprite player_right_1 = new Sprite(16, 1, 1, SpriteSheet.tiles, 11, 16);
 	public static Sprite player_right_2 = new Sprite(16, 1, 2, SpriteSheet.tiles, 12, 16);
+
+	public static Sprite player_shield_right_1 = new Sprite(16, 1, 12+1, SpriteSheet.tiles, 11, 16);
+	public static Sprite player_shield_right_2 = new Sprite(16, 1, 12+2, SpriteSheet.tiles, 12, 16);
 	
 	public static Sprite player_dead1 = new Sprite(16, 4, 2, SpriteSheet.tiles, 14, 16);
 	public static Sprite player_dead2 = new Sprite(16, 5, 2, SpriteSheet.tiles, 13, 15);
