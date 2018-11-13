@@ -48,7 +48,7 @@ public abstract class Enemy extends Character {
 		_deadSprite = dead;
 	}
 
-	private void checkCollision() {
+	protected void checkCollision() {
 		FlameSegment flameSegment = _board.getFlameSegmentAt(getTileX(), getTileY());
 		if (flameSegment != null) {
 			flameSegment.collide(this);

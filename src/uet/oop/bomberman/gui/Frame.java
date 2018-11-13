@@ -56,5 +56,9 @@ public class Frame extends JFrame {
 	public void setWallpass(int t){
 		_itempanel.setWallpassLabel(t);
 	}
+
+	public void changeTypeOfBomb(){
+		_itempanel.changeTypeOfBombLabel();
+	}
 	
 }

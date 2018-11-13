@@ -173,6 +173,36 @@ public class Sprite {
 	public static Sprite explosion_vertical_down_last2 = new Sprite(16, 3, 6, SpriteSheet.tiles, 16, 16);
 	
 	/*
+		WaterSegment
+	 */
+	public static Sprite water_bomb_exploded = new Sprite(16, 0, 4-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_bomb_exploded1 = new Sprite(16, 0, 5-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_bomb_exploded2 = new Sprite(16, 0, 6-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_vertical = new Sprite(16, 1, 5-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical1 = new Sprite(16, 2, 5-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical2 = new Sprite(16, 3, 5-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_horizontal = new Sprite(16, 1, 7-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal1 = new Sprite(16, 1, 8-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal2 = new Sprite(16, 1, 9-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_horizontal_left_last = new Sprite(16, 0, 7-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_left_last1 = new Sprite(16, 0, 8-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_left_last2 = new Sprite(16, 0, 9, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_horizontal_right_last = new Sprite(16, 2, 7-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_right_last1 = new Sprite(16, 2, 8-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_right_last2 = new Sprite(16, 2, 9-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_vertical_top_last = new Sprite(16, 1, 4-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_top_last1 = new Sprite(16, 2, 4-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_top_last2 = new Sprite(16, 3, 4-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_vertical_down_last = new Sprite(16, 1, 6-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_down_last1 = new Sprite(16, 2, 6-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_down_last2 = new Sprite(16, 3, 6-4+15, SpriteSheet.tiles, 16, 16);
+	/*
 	|--------------------------------------------------------------------------
 	| Brick FlameSegment
 	|--------------------------------------------------------------------------

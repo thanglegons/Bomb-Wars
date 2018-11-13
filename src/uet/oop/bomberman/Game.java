@@ -38,6 +38,9 @@ public class Game extends Canvas {
 	protected static double bomberSpeed = BOMBERSPEED;
 	protected static double bomberSpeedV2 = 0;
 
+	protected static int maxTypeOfBomb = 2;
+	protected static int typeOfBomb = 0;
+
 	protected static boolean godMode = false;
 
 	protected static boolean superbomb = false;
@@ -151,6 +154,7 @@ public class Game extends Canvas {
 			_frame.setShield(Game.isShield());
 			if(System.currentTimeMillis() - timer > 1000) {
 				_frame.setWallpass(Game.getWallpassDuration()/100);
+				_frame.changeTypeOfBomb();
 				_frame.setTime(_board.subtractTime());
 				_frame.setPoints(_board.getPoints());
 				timer += 1000;
@@ -264,5 +268,24 @@ public class Game extends Canvas {
 
 	public static void setSuperbomb(boolean superbomb) {
 		Game.superbomb = superbomb;
+	}
+
+	public static int getMaxTypeOfBomb() {
+		return maxTypeOfBomb;
+	}
+
+	public static void setMaxTypeOfBomb(int maxTypeOfBomb) {
+		Game.maxTypeOfBomb = maxTypeOfBomb;
+	}
+
+	public static int getTypeOfBomb() {
+		return typeOfBomb;
+	}
+
+	public static void setTypeOfBomb(int typeOfBomb) {
+		Game.typeOfBomb = typeOfBomb;
+	}
+	public static void changeTypeOfBomb(){
+		Game.typeOfBomb = (Game.typeOfBomb + 1) % Game.maxTypeOfBomb;
 	}
 }

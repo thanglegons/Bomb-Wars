@@ -51,7 +51,7 @@ public class LevelGenerator {
                 }
                 board[x][y] = k;
             }
-            int brick = height*width/4;
+            int brick = 0;//height*width/4;
             for (int i = 1; i <= brick; i++) {
                 char k = '*';
                 int x = 1 + random.nextInt(height - 2);
@@ -90,6 +90,6 @@ public class LevelGenerator {
     }
 
     public static void main(String[] args) {
-        generate(1, 20, 10);
+        generate(1, 0, 0);
     }
 }

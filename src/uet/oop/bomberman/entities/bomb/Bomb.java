@@ -19,8 +19,8 @@ public class Bomb extends AnimatedEntitiy {
 	protected Flame[] _flames;
 	protected boolean _exploded = false;
 	protected boolean _allowedToPassThru = true;
-	private int[] dx = new int[]{0, 1, 0, -1};
-	private int[] dy = new int[]{-1, 0, 1, 0};
+	protected int[] dx = new int[]{0, 1, 0, -1};
+	protected int[] dy = new int[]{-1, 0, 1, 0};
 
 	public Bomb(int x, int y, Board board) {
 		_x = x;

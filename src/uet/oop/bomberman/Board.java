@@ -31,6 +31,7 @@ public class Board implements IRender {
 	public Entity[] _entities;
 	public List<Character> _characters = new ArrayList<>();
 	protected List<Bomb> _bombs = new ArrayList<>();
+	private List<FlameSegment> _freeFlameSegment = new ArrayList<>();
 	private List<Message> _messages = new ArrayList<>();
 	
 	private int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
@@ -54,12 +55,18 @@ public class Board implements IRender {
 		updateEntities();
 		updateCharacters();
 		updateBombs();
+		updateFreeFlameSegment();
 		updateMessages();
 		detectEndGame();
 		
 		for (int i = 0; i < _characters.size(); i++) {
 			Character a = _characters.get(i);
 			if(a.isRemoved()) _characters.remove(i);
+		}
+		for (int i=0;i<_freeFlameSegment.size();i++){
+			FlameSegment flameSegment = _freeFlameSegment.get(i);
+			if (flameSegment.isRemoved())
+				_freeFlameSegment.remove(i);
 		}
 	}
 
@@ -81,10 +88,10 @@ public class Board implements IRender {
 				_entities[x + y * _levelLoader.getWidth()].render(screen);
 			}
 		}
-		
+
+		renderFreeFlameSegment(screen);
 		renderBombs(screen);
 		renderCharacter(screen);
-		
 	}
 	
 	public void nextLevel() {
@@ -230,7 +237,10 @@ public class Board implements IRender {
 				return e;
 			}
 		}
-		
+		for (FlameSegment flameSegment: _freeFlameSegment){
+			if (flameSegment.getX() == x && flameSegment.getY() == y)
+				return flameSegment;
+		}
 		return null;
 	}
 	
@@ -249,6 +259,10 @@ public class Board implements IRender {
 	public void addBomb(Bomb e) {
 		_bombs.add(e);
 	}
+
+	public void addFreeFlameSegment(FlameSegment a) {
+		_freeFlameSegment.add(a);
+	}
 	
 	public void addMessage(Message e) {
 		_messages.add(e);
@@ -266,6 +280,13 @@ public class Board implements IRender {
 		
 		while(itr.hasNext())
 			itr.next().render(screen);
+	}
+
+	protected void renderFreeFlameSegment(Screen screen){
+		for (FlameSegment flameSegment : _freeFlameSegment){
+			if (flameSegment!=null)
+			flameSegment.render(screen);
+		}
 	}
 	
 	public void renderMessages(Graphics g) {
@@ -301,7 +322,12 @@ public class Board implements IRender {
 		while(itr.hasNext())
 			itr.next().update();
 	}
-	
+	protected void updateFreeFlameSegment(){
+		for (FlameSegment flameSegment: _freeFlameSegment){
+			if (flameSegment!=null)
+			flameSegment.update();
+		}
+	}
 	protected void updateMessages() {
 		if( _game.isPaused() ) return;
 		Message m;

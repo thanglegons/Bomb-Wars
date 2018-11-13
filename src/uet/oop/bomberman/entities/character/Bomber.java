@@ -4,8 +4,7 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
-import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.bomb.FlameSegment;
+import uet.oop.bomberman.entities.bomb.*;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
 import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.item.Item;
@@ -30,6 +29,7 @@ public class Bomber extends Character {
     private int[] dx = new int[]{0, 1, 0, -1};
     private int[] dy = new int[]{-1, 0, 1, 0};
     private int invulnerableTime = 0;
+    private int changeBombCoolDown = 0;
 
     public Bomber(int x, int y, Board board) {
         super(x, y, board);
@@ -53,6 +53,14 @@ public class Bomber extends Character {
         }
     }
 
+
+    private void checkTypeOfBomb() {
+        if (_input.r && changeBombCoolDown == 0) {
+            Game.changeTypeOfBomb();
+            changeBombCoolDown = 20;
+        }
+    }
+
     @Override
     public void update() {
         clearBombs();
@@ -69,12 +77,16 @@ public class Bomber extends Character {
         //if (_timeBetweenPutBombs >= 7500) _timeBetweenPutBombs = 0;
         //else _timeBetweenPutBombs--;
         _timeBetweenPutBombs--;
-        if (invulnerableTime>0)
-        invulnerableTime--;
+        if (invulnerableTime > 0)
+            invulnerableTime--;
+        if (changeBombCoolDown > 0)
+            changeBombCoolDown--;
         Game.decreaseWallpassDuration();
         animate();
 
         calculateMove();
+
+        checkTypeOfBomb();
 
         detectPlaceBomb();
 
@@ -131,7 +143,7 @@ public class Bomber extends Character {
     protected void placeBomb(int x, int y) {
         System.out.println("Bomb");
         //Entity entity_test = this._board.getEntityAt(0,0);
-        Bomb bomb = new Bomb(x, y, this._board);
+        Bomb bomb = BombDecider.creatBomb(x,y,this._board);
         _board.addBomb(bomb);
 //        _board.addEntity(x +  y * _board.getWidth(), bomb);
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
@@ -272,7 +284,7 @@ public class Bomber extends Character {
     }
 
     private void chooseSprite() {
-        if (!Game.isShield() && invulnerableTime%10 < 5) {
+        if (!Game.isShield() && invulnerableTime % 10 < 5) {
             switch (_direction) {
                 case 0:
                     _sprite = Sprite.player_up;
