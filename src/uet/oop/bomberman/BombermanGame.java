@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public class BombermanGame {
 	
 	public static void main(String[] args) {
-		Game.setGodMode(true);
+		new Frame();
+		//new MainMenu();
+		/*Game.setGodMode(true);
 		Game.setShield(true);
 		Game.setMaxTypeOfBomb(3);
-		new Frame();
+		new Frame();*/
 	}
 }

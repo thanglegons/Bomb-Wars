@@ -4,8 +4,10 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.entities.tile.Grass;
 
 import java.awt.*;
+import java.util.Collections;
 
 /**
  * Xử lý render cho tất cả Entity và một số màn hình phụ ra Game Panel
@@ -120,6 +122,15 @@ public class Screen {
 		drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (Game.TILES_SIZE * 2) * Game.SCALE, g);
 	}
 
+	public void drawEndMultiGame(Graphics g, int winner) {
+		g.setColor(Color.black);
+		g.fillRect(0, 0, getRealWidth(), getRealHeight());
+		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+		g.setFont(font);
+		g.setColor(Color.yellow);
+		drawCenteredString("Player " + winner + " WIN", getRealWidth(), getRealHeight(), g);
+	}
+
 	public void drawChangeLevel(Graphics g, int level) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getRealWidth(), getRealHeight());
@@ -127,12 +138,18 @@ public class Screen {
 		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
 		g.setFont(font);
 		g.setColor(Color.white);
-		if (level == 2)
-			System.out.println("ok");
 		drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
 		
 	}
-	
+	public void drawMainMenu(Graphics g){
+		g.setColor(Color.WHITE);
+		g.fillRect(0,0,getRealWidth(),getRealHeight());
+
+		Font font = new Font("Arial", Font.PLAIN, 20* Game.SCALE);
+		g.setFont(font);
+		g.setColor(Color.RED);
+		drawCenteredString("SHIT GAMEEEEEEE", getRealWidth(),getRealHeight(),g);
+	};
 	public void drawPaused(Graphics g) {
 		Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
 		g.setFont(font);

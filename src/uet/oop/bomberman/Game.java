@@ -23,14 +23,16 @@ public class Game extends Canvas {
 
 	public static final String TITLE = "ShitGame";
 
-	private static final int BOMBRATE = 2;
-	private static final int BOMBRADIUS = 1;
-	private static final double BOMBERSPEED = 1.0;
+	protected static final int BOMBRATE = 2;
+	protected static final int BOMBRADIUS = 1;
+	protected static final double BOMBERSPEED = 1.0;
 
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
 
 	protected static int SCREENDELAY = 3;
+
+	protected static int numberOfPlayer;
 
 	protected static int bombMax = BOMBRATE;
 	protected static int bombRate = BOMBRATE;
@@ -149,12 +151,18 @@ public class Game extends Canvas {
 				renderGame();
 			}
 
-
+			if (numberOfPlayer > 1)
+				_frame.changeMode(true);
 			frames++;
-			_frame.setShield(Game.isShield());
+				for (int i=0;i<_board.getBombers().size();i++)
+			_frame.setShield(i, _board.getBombers().get(i).isShield());
 			if(System.currentTimeMillis() - timer > 1000) {
-				_frame.setWallpass(Game.getWallpassDuration()/100);
-				_frame.changeTypeOfBomb();
+				if (_board.getBomber() != null) {
+					for (int i=0;i<_board.getBombers().size();i++) {
+						_frame.setWallpass(i, _board.getBombers().get(i).getWallpassDuration() / 100);
+						_frame.changeTypeOfBomb(i,_board.getBombers().get(i).getTypeOfBomb());
+					}
+				}
 				_frame.setTime(_board.subtractTime());
 				_frame.setPoints(_board.getPoints());
 				timer += 1000;
@@ -172,7 +180,7 @@ public class Game extends Canvas {
 		return bomberSpeed;
 	}
 
-	public static int getBombRate() {
+	/*public static int getBombRate() {
 		return bombRate;
 	}
 
@@ -194,7 +202,7 @@ public class Game extends Canvas {
 
 	public static void addBombRate(int i) {
 		bombRate += i;
-	}
+	}*/
 
 	public void resetScreenDelay() {
 		_screenDelay = SCREENDELAY;
@@ -212,7 +220,7 @@ public class Game extends Canvas {
 		_paused = true;
 	}
 
-	public static double getBomberSpeedV2() {
+	/*public static double getBomberSpeedV2() {
 		return bomberSpeedV2;
 	}
 
@@ -246,6 +254,7 @@ public class Game extends Canvas {
 	public static void setGodMode(boolean godMode) {
 		if (godMode) {
 			Game.godMode = godMode;
+			setBombMax(100);
 			bombRate = 100;
 			bombRadius = 100;
 			bomberSpeedV2 = 1.0;
@@ -287,5 +296,21 @@ public class Game extends Canvas {
 	}
 	public static void changeTypeOfBomb(){
 		Game.typeOfBomb = (Game.typeOfBomb + 1) % Game.maxTypeOfBomb;
+	}*/
+
+	public static int getNumberOfPlayer() {
+		return numberOfPlayer;
+	}
+
+	public static void setNumberOfPlayer(int numberOfPlayer) {
+		Game.numberOfPlayer = numberOfPlayer;
+	}
+
+	public static int getBOMBRATE() {
+		return BOMBRATE;
+	}
+
+	public static int getBOMBRADIUS() {
+		return BOMBRADIUS;
 	}
 }

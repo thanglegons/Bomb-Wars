@@ -1,6 +1,7 @@
 package uet.oop.bomberman.gui;
 
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.entities.bomb.Bomb;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,20 +14,22 @@ public class Frame extends JFrame {
 	public GamePanel _gamepane;
 	private JPanel _containerpane;
 	private InfoPanel _infopanel;
-	private ItemPanel _itempanel;
-	
-	private Game _game;
+	private ItemPanel[] _itempanel;
+
+	Game _game;
 
 	public Frame() {
-		
+		_itempanel = new ItemPanel[2];
 		_containerpane = new JPanel(new BorderLayout());
 		_gamepane = new GamePanel(this);
 		_infopanel = new InfoPanel(_gamepane.getGame());
-		_itempanel = new ItemPanel();
+		_itempanel[0] = new ItemPanel();
+		_itempanel[1] = new ItemPanel();
 		
 		_containerpane.add(_infopanel, BorderLayout.PAGE_START);
 		_containerpane.add(_gamepane, BorderLayout.CENTER);
-		_containerpane.add(_itempanel,BorderLayout.PAGE_END);
+		_containerpane.add(_itempanel[0],BorderLayout.PAGE_END);
+		//_containerpane.add(_itempanel[0], BorderLayout.PAGE_END);
 		
 		_game = _gamepane.getGame();
 		
@@ -49,16 +52,21 @@ public class Frame extends JFrame {
 		_infopanel.setPoints(points);
 	}
 
-	public void setShield(boolean shield){
-		_itempanel.setShield(shield);
+	public void setShield(int player, boolean shield){
+		_itempanel[player].setShield(shield);
 	}
 
-	public void setWallpass(int t){
-		_itempanel.setWallpassLabel(t);
+	public void setWallpass(int player, int t){
+		_itempanel[player].setWallpassLabel(t);
 	}
 
-	public void changeTypeOfBomb(){
-		_itempanel.changeTypeOfBombLabel();
+	public void changeTypeOfBomb(int player, int typeOfBomb){
+		_itempanel[player].changeTypeOfBombLabel(typeOfBomb);
 	}
-	
+	public void changeMode(boolean multi){
+		if (multi) {
+			_containerpane.add(_itempanel[1], BorderLayout.PAGE_START);
+			_containerpane.remove(_infopanel);
+		}
+	}
 }

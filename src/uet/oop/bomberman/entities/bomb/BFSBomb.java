@@ -14,17 +14,19 @@ import java.util.Map;
 
 public class BFSBomb extends Bomb {
     private int trueRadius;
-    public BFSBomb(int x, int y, Board board) {
-        super(x, y, board);
-        trueRadius = Math.min(5,Game.getBombRadius());
+    public BFSBomb(int x, int y, Board board, Bomber _bomber) {
+        super(x, y, board,_bomber);
+        trueRadius = Math.min(5,bomber.getBombRadius());
     }
     protected void explode(){
         if (_exploded) return;
         _exploded = true;
         _flames = new Flame[4];
-        Bomber bomber = _board.getBomber();
-        if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
-            (bomber).kill();
+        //Bomber bomber = _board.getBomber();
+        for (Bomber bomber: _board.getBombers()) {
+            if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
+                (bomber).kill();
+            }
         }
         // TODO: tạo các Flame
         boolean[][] mark = new boolean[_board.getWidth()][_board.getHeight()];
@@ -62,7 +64,7 @@ public class BFSBomb extends Bomb {
                     for (Bomb bomb: _board.getBombs()){
                         flameSegment.collide(bomb);
                     }*/
-                    flameList.add(new Flame(newX,newY,i,1,_board));
+                    flameList.add(new Flame(newX,newY,i,1,_board,bomber));
                     mark[newX][newY] = true;
                     queueX.add(newX);
                     queueY.add(newY);

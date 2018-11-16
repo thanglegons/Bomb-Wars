@@ -20,6 +20,7 @@ public class Flame extends Entity {
     private int permittedLength = -1;
     private int[] dx = new int[]{0, 1, 0, -1};
     private int[] dy = new int[]{-1, 0, 1, 0};
+    private Bomber bomber;
     private boolean _water = false;
 
     /**
@@ -28,7 +29,7 @@ public class Flame extends Entity {
      * @param direction là hướng của Flame
      * @param radius    độ dài cực đại của Flame
      */
-    public Flame(int x, int y, int direction, int radius, Board board) {
+    public Flame(int x, int y, int direction, int radius, Board board,Bomber _bomber) {
         xOrigin = x;
         yOrigin = y;
         _x = x;
@@ -36,9 +37,10 @@ public class Flame extends Entity {
         _direction = direction;
         _radius = radius;
         _board = board;
+        bomber = _bomber;
         createFlameSegments();
     }
-    public Flame(int x, int y, int direction, int radius, Board board, boolean water) {
+    public Flame(int x, int y, int direction, int radius, Board board, Bomber _bomber, boolean water) {
         xOrigin = x;
         yOrigin = y;
         _x = x;
@@ -47,6 +49,7 @@ public class Flame extends Entity {
         _radius = radius;
         _board = board;
         _water = water;
+        bomber = _bomber;
         createFlameSegments();
     }
     /**
@@ -65,17 +68,17 @@ public class Flame extends Entity {
         // TODO: tạo các segment dưới đây
         for (int i = 0; i < calculatePermitedDistance(); i++) {
             if (!_water) {
-                FlameSegment flameSegment = _board.getFlameSegmentAt(xOrigin + i * dx[_direction],
-                        yOrigin + i * dy[_direction]);
-                if (flameSegment == null)
+                //FlameSegment flameSegment = _board.getFlameSegmentAt(xOrigin + i * dx[_direction],
+                //        yOrigin + i * dy[_direction]);
+                //if (flameSegment == null)
                     _flameSegments[i] = new FlameSegment(
                             xOrigin + i * dx[_direction],
                             yOrigin + i * dy[_direction],
                             _direction,
                             (i == calculatePermitedDistance())
                     );
-                else
-                    _flameSegments[i] = flameSegment;
+                //else
+                //   _flameSegments[i] = flameSegment;
                 //Destroy Entity
                 Entity temp = _board.getEntityAt(xOrigin + i * dx[_direction], yOrigin + i * dy[_direction]);
                 _flameSegments[i].collide(temp);
@@ -114,7 +117,7 @@ public class Flame extends Entity {
             int x = xOrigin + i * dx[_direction];
             int y = yOrigin + i * dy[_direction];
             Entity entity = this._board.getEntityAt(xOrigin + i * dx[_direction], yOrigin + i * dy[_direction]);
-            if (!Game.isSuperbomb()) {
+            if (!bomber.isSuperbomb()) {
                 if (entity.getSprite() == Sprite.wall ||
                         (entity instanceof LayeredEntity && ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick)) {
                     if (!(entity.getSprite() == Sprite.wall)) {

@@ -38,6 +38,7 @@ public class FileLevelLoader extends LevelLoader {
         try {
 //			String levelInput = "D:\\Project\\Java\\bomber\\bomberman-starter-starter-project-1\\bomberman-starter-starter-project-1\\res\\levels\\Level1.txt";
             BufferedReader in = new BufferedReader(new FileReader(getClass().getResource("/levels/Level" + String.valueOf(level) + ".txt").getFile()));
+            //BufferedReader in = new BufferedReader(new FileReader("levels/Level" + String.valueOf(level) + ".txt"));
             // Read level + height + width
             String[] x = in.readLine().split(" ");
             this._level = Integer.valueOf(x[0]);
@@ -62,12 +63,13 @@ public class FileLevelLoader extends LevelLoader {
 
     @Override
     public void createEntities() {
+        int numberOfPlayer = 1;
         for (int i = 0; i < this._height; i++) {
             for (int j = 0; j < this._width; j++) {
                 if (this._map[i][j] == 'p') {
                     // Add Bomber
                     int xBomber = j, yBomber = i;
-                    _board.addCharacter(new Bomber(Coordinates.tileToPixel(xBomber), Coordinates.tileToPixel(yBomber) + Game.TILES_SIZE, _board));
+                    _board.addCharacter(new Bomber(Coordinates.tileToPixel(xBomber), Coordinates.tileToPixel(yBomber) + Game.TILES_SIZE, _board,numberOfPlayer++));
                     Screen.setOffset(0, 0);
                     _board.addEntity(xBomber + yBomber * _width, new Grass(xBomber, yBomber, Sprite.grass));
                 } else if (this._map[i][j] == '*') {
@@ -177,7 +179,9 @@ public class FileLevelLoader extends LevelLoader {
                             new Brick(xI, yI, Sprite.brick)));
                 }
             }
+
         }
+        Game.setNumberOfPlayer(numberOfPlayer-1);
     }
 
 }

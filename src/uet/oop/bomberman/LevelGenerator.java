@@ -13,8 +13,8 @@ public class LevelGenerator {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(filename), "utf-8"))) {
             Random random = new Random();
-            int height = 13 + (random.nextInt(15));
-            int width = 31 + (random.nextInt(15));
+            int height = 13;//13 + (random.nextInt(15));
+            int width = 15;//31 + (random.nextInt(15));
             writer.write("" + level + " " + height + " " + width + "\n");
             char[][] board = new char[height][width];
             for (int i = 0; i < height; i++)
@@ -51,7 +51,7 @@ public class LevelGenerator {
                 }
                 board[x][y] = k;
             }
-            int brick = 0;//height*width/4;
+            int brick = height*width/3 - item;
             for (int i = 1; i <= brick; i++) {
                 char k = '*';
                 int x = 1 + random.nextInt(height - 2);
@@ -90,6 +90,6 @@ public class LevelGenerator {
     }
 
     public static void main(String[] args) {
-        generate(1, 0, 0);
+        generate(1, 0, 50);
     }
 }

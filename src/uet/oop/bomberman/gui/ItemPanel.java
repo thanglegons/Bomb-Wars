@@ -21,16 +21,15 @@ public class ItemPanel extends JPanel {
     public ItemPanel() {
         setLayout(new GridLayout());
 
-        shieldLabel = new JLabel("Shield: " + Game.isShield());
+        shieldLabel = new JLabel("Shield: " + "");
         shieldLabel.setForeground(Color.red);
         shieldLabel.setHorizontalAlignment(JLabel.CENTER);
 
         typeOfBombLabel = new JLabel("");
         typeOfBombLabel.setForeground(Color.ORANGE);
         typeOfBombLabel.setHorizontalAlignment(JLabel.CENTER);
-        changeTypeOfBombLabel();
 
-        wallpassLabel = new JLabel("Wallpass: " + Game.getWallpassDuration()/1000);
+        wallpassLabel = new JLabel("Wallpass: " + "");
         wallpassLabel.setForeground(Color.green);
         wallpassLabel.setHorizontalAlignment(JLabel.CENTER);
 
@@ -51,8 +50,8 @@ public class ItemPanel extends JPanel {
         wallpassLabel.setText("Wallpass: " + t);
     }
 
-    public void changeTypeOfBombLabel(){
-        switch (Game.getTypeOfBomb()){
+    public void changeTypeOfBombLabel(int typeOfBomb){
+        switch (typeOfBomb){
             case 0: {
                 typeOfBombLabel.setText("Bomb: " + "Normal");
                 typeOfBombLabel.setForeground(Color.ORANGE);
