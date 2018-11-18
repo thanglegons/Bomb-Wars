@@ -93,14 +93,14 @@ public abstract class Enemy extends Character {
 		// TODO: sử dụng move() để di chuyển
 		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
 		if (this instanceof Enemy) {
-			_direction = _ai.calculateDirection(_direction,true);
+			_direction = _ai.calculateDirection(_direction,true, this.getX(), this.getY());
 			this._moving = true;
 			double nextX = this.getX() + dx[this._direction] * _speed;
 			double nextY = this.getY() + dy[this._direction] * _speed;
 			if (canMove(nextX, nextY))
 				move(nextX, nextY);
 			else
-				_direction = _ai.calculateDirection(_direction,false);
+				_direction = _ai.calculateDirection(_direction,false, this.getX(), this.getY());
 		}
 	}
 	

@@ -13,10 +13,10 @@ public class AIMedium extends AI {
 	}
 
 	@Override
-	public int calculateDirection(int currentDirection, boolean rateApplied) {
+	public int calculateDirection(int currentDirection, boolean rateApplied, double x, double y) {
 		// TODO: cài đặt thuật toán tìm đường đi
 		AILow aiLow = new AILow();
-		return aiLow.calculateDirection(currentDirection,rateApplied);
+		return aiLow.calculateDirection(currentDirection,rateApplied, x, y);
 	}
 
 }

@@ -55,7 +55,7 @@ public class Game extends Canvas {
 	private boolean _running = false;
 	private boolean _paused = true;
 
-	private Board _board;
+	private static Board _board;
 	private Screen screen;
 	private Frame _frame;
 
@@ -208,7 +208,7 @@ public class Game extends Canvas {
 		_screenDelay = SCREENDELAY;
 	}
 
-	public Board getBoard() {
+	public static Board getBoard() {
 		return _board;
 	}
 
