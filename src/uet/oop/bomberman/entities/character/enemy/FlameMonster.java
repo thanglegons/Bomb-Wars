@@ -15,7 +15,7 @@ public class FlameMonster extends Enemy {
         _sprite = Sprite.balloom_left1;
 
         _ai = new AILow();
-        _direction = _ai.calculateDirection(_direction,false, this.getX(), this.getY());
+        _direction = _ai.calculateDirection(_direction,false, this.getX(), this.getY(), _speed);
     }
 
     public void update() {

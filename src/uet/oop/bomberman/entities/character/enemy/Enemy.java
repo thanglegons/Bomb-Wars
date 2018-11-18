@@ -33,6 +33,8 @@ public abstract class Enemy extends Character {
 
 	private int[] dx = new int[]{0, 1, 0, -1};
 	private int[] dy = new int[]{-1, 0, 1, 0};
+    private double[] gx = new double[]{Game.TILES_SIZE / 2, Game.TILES_SIZE, Game.TILES_SIZE / 2, 0};
+    private double[] gy = new double[]{0, Game.TILES_SIZE / 2, Game.TILES_SIZE, Game.TILES_SIZE / 2};
 	
 	public Enemy(int x, int y, Board board, Sprite dead, double speed, int points) {
 		super(x, y, board);
@@ -93,14 +95,34 @@ public abstract class Enemy extends Character {
 		// TODO: sử dụng move() để di chuyển
 		// TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
 		if (this instanceof Enemy) {
-			_direction = _ai.calculateDirection(_direction,true, this.getX(), this.getY());
+			_direction = _ai.calculateDirection(_direction,true, this.getX(), this.getY(), _speed);
 			this._moving = true;
 			double nextX = this.getX() + dx[this._direction] * _speed;
 			double nextY = this.getY() + dy[this._direction] * _speed;
 			if (canMove(nextX, nextY))
 				move(nextX, nextY);
-			else
-				_direction = _ai.calculateDirection(_direction,false, this.getX(), this.getY());
+			else {
+			    double xa = nextX;
+			    double ya = nextY;
+                _direction = _ai.calculateDirection(_direction, false, this.getX(), this.getY(), _speed);
+                int nextDir = -1;
+                for (int len = 0; len < Game.TILES_SIZE / 5; len++) {
+                    if (nextDir != -1) break;
+                    for (int dir = 0; dir < 4; dir++) {
+                        if (dir == this._direction || Math.abs(dir - this._direction) == 2) continue;
+                        double tnextX = xa + dx[dir] * len + dx[_direction] * _speed;
+                        double tnextY = ya + dy[dir] * len + dy[_direction] * _speed;
+                        if (canMove(tnextX, tnextY)) {
+                            nextDir = dir;
+                            this._x = xa + dx[dir] * len + dx[_direction] * _speed;
+                            this._y = ya + dy[dir] * len + dy[_direction] * _speed;
+                            break;
+                        }
+                    }
+                }
+                if (nextDir == -1) return;
+			}
+
 		}
 	}
 	
@@ -131,7 +153,7 @@ public abstract class Enemy extends Character {
 				if(this._direction == 3){
 					if(!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
 				}
-				int curTileX = Coordinates.pixelToTile(x + i * (4.0) / (4.0) * (Game.TILES_SIZE - 1));
+				int curTileX = Coordinates.pixelToTile(x + i * (Game.TILES_SIZE - 1));
 				int curTileY = Coordinates.pixelToTile((y + j * (Game.TILES_SIZE - 1)));
 				//System.out.println("" + curTileX +" " + curTileY);
 				Entity entity = this._board.getEntityAt(curTileX, curTileY);
