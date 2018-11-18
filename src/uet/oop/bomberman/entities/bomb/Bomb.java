@@ -19,14 +19,17 @@ public class Bomb extends AnimatedEntitiy {
 	protected Flame[] _flames;
 	protected boolean _exploded = false;
 	protected boolean _allowedToPassThru = true;
-	private int[] dx = new int[]{0, 1, 0, -1};
-	private int[] dy = new int[]{-1, 0, 1, 0};
+	protected int[] dx = new int[]{0, 1, 0, -1};
+	protected int[] dy = new int[]{-1, 0, 1, 0};
 
-	public Bomb(int x, int y, Board board) {
+	protected Bomber bomber;
+
+	public Bomb(int x, int y, Board board, Bomber _bomber) {
 		_x = x;
 		_y = y;
 		_board = board;
 		_sprite = Sprite.bomb;
+		bomber = _bomber;
 	}
 
 	@Override
@@ -83,13 +86,14 @@ public class Bomb extends AnimatedEntitiy {
 		_flames = new Flame[4];
 		//Entity entity_test = this._board.getEntityAt(0,0);
 		// TODO: xử lý khi Character đứng tại vị trí Bomb
-		Bomber bomber = _board.getBomber();
-		if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
-			(bomber).kill();
+		for (Bomber bomber: _board.getBombers()) {
+			if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
+				(bomber).kill();
+			}
 		}
 		// TODO: tạo các Flame
 		for (int i=0;i<4;i++){
-			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, Game.getBombRadius(),this._board);
+			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, bomber.getBombRadius(),this._board,bomber);
 		}
 	}
 

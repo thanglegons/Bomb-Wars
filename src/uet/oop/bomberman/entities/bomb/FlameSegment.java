@@ -4,6 +4,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.entities.character.enemy.FlameMonster;
 import uet.oop.bomberman.entities.tile.destroyable.DestroyableTile;
 import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.Screen;
@@ -13,6 +14,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class FlameSegment extends Entity {
 
 	protected boolean _last;
+	protected int _duration = 20;
 
 	/**
 	 *
@@ -58,7 +60,10 @@ public class FlameSegment extends Entity {
 				break;
 		}
 	}
-	
+
+	public void setDuration(int duration){
+		_duration = duration;
+	}
 	@Override
 	public void render(Screen screen) {
 		int xt = (int)_x << 4;
@@ -68,7 +73,11 @@ public class FlameSegment extends Entity {
 	}
 	
 	@Override
-	public void update() {}
+	public void update() {
+		if (_duration<0)
+			remove();
+		_duration--;
+	}
 
 	@Override
 	public boolean collide(Entity e) {
@@ -87,6 +96,7 @@ public class FlameSegment extends Entity {
 		if (e instanceof Item){
 			((Item)e).destroy();
 		}
+		if (e instanceof FlameMonster) return false;
 		if (e instanceof Character){
 			if (((Character) e).getTileX() == _x && ((Character) e).getTileY() == _y) {
 				((Character) e).kill();
