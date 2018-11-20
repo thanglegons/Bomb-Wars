@@ -48,9 +48,9 @@ public class AILow extends AI {
 				}
 			}
 		}
-		if(map[tileX][tileY] != 0){
-			System.out.println("Something wrong!!");
-		}
+//		if(map[tileX][tileY] != 0){
+//			System.out.println("Something wrong!!");
+//		}
 		for(int dir = 0; dir < 4; dir++){
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 2; j++) {
@@ -80,9 +80,9 @@ public class AILow extends AI {
 				ArrayList<Integer> validMove = new ArrayList<>();
 				for(int i = 0; i < 4; i++) if(canGo[i] == 0) validMove.add(i);
 				newDirection = validMove.get(random.nextInt(validMove.size()));
-				System.out.println("haha");
-				for(Integer x : validMove) System.out.print(x);
-				System.out.println("??" + newDirection + "?");
+//				System.out.println("haha");
+//				for(Integer x : validMove) System.out.print(x);
+//				System.out.println("??" + newDirection + "?");
 			} else{
 				if (random.nextDouble() < CHANGE_RATE || !rateApplied)
 					newDirection = random.nextInt(4);
