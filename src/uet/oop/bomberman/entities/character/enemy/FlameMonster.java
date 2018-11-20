@@ -10,7 +10,7 @@ public class FlameMonster extends Enemy {
 
 
     public FlameMonster(int x, int y, Board board) {
-        super(x, y, board, Sprite.balloom_dead, Game.getBomberSpeed() / 2, 100);
+        super(x, y, board, Sprite.balloom_dead, Game.getBomberSpeed() / 5, 100);
 
         _sprite = Sprite.balloom_left1;
 

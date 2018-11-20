@@ -61,7 +61,7 @@ public class AIMedium extends AI {
 
 	private Pair bomber;
 
-	private int shortetsPath(int x, int y){
+	private int shortestPath(int x, int y){
 		Queue<Pair> q = new LinkedList<>();
 		q.add(new Pair(x, y));
 		int[][] dist = new int[width][height];
@@ -76,6 +76,7 @@ public class AIMedium extends AI {
 			if(cur == bomber){
 				return dist[curX][curY];
 			}
+			if(dist[curX][curY] > 5) continue;
 			for(int dir = 0; dir < 4; dir++){
 				int nextX = curX + dx[dir];
 				int nextY = curY + dy[dir];
@@ -158,7 +159,7 @@ public class AIMedium extends AI {
                 int nextEX = Coordinates.pixelToTile(curX + dx[i] * _speed + gx[i]);
                 int nextEY = Coordinates.pixelToTile(curY + dy[i] * _speed + gy[i]);
 			    if(map[nextEX][nextEY] != 0) continue;
-			    int curPath = shortetsPath(nextEX, nextEY);
+			    int curPath = shortestPath(nextEX, nextEY);
 			    if(curPath < minSoFar){
 			        minSoFar = curPath;
 			        newDirection = i;
