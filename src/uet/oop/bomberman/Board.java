@@ -106,11 +106,14 @@ public class Board implements IRender {
 	}
 	
 	public void loadLevel(int level) {
+		if (level == 2)
+			System.out.println("a");
 		_time = Game.TIME;
 		_screenToShow = 2;
 		_game.resetScreenDelay();
 		_game.pause();
 		_characters.clear();
+		_freeFlameSegment.clear();
 		_bombs.clear();
 		_messages.clear();
 		try {
@@ -118,6 +121,7 @@ public class Board implements IRender {
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
 			
 			_levelLoader.createEntities();
+			_bombers.clear();
 			for (Character character: _characters){
 				if (character instanceof Bomber){
 					_bombers.add((Bomber)character);

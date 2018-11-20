@@ -4,18 +4,20 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.enemy.ai.AILow;
+import uet.oop.bomberman.entities.character.enemy.ai.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class FlameMonster extends Enemy {
 
 
     public FlameMonster(int x, int y, Board board) {
-        super(x, y, board, Sprite.balloom_dead, Game.getBomberSpeed() / 5, 100);
+        super(x, y, board, Sprite.balloom_dead, Game.getBomberSpeed(), 100);
 
         _sprite = Sprite.balloom_left1;
-
-        _ai = new AILow();
-        _direction = _ai.calculateDirection(_direction,false, this.getX(), this.getY(), _speed);
+       // _board = Game.getBoard();
+        _ai = new AIMedium(_board.getBomber(),this);
+        _direction = 0;
+        //_direction = _ai.calculateDirection(_direction,false, this.getX(), this.getY(), _speed);
     }
 
     public void update() {

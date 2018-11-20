@@ -33,7 +33,7 @@ public class Bomber extends Character {
     private int changeBombCoolDown = 0;
     private int playerNumber = 1;
 
-    private int bombRate = Game.getBOMBRATE() -1;
+    private int bombRate = Game.getBOMBRATE();
     private int bombMax = Game.getBOMBRATE();
     private int bombRadius = Game.getBOMBRADIUS();
     private double speedv2 = 0;
@@ -49,6 +49,18 @@ public class Bomber extends Character {
         //_bombs = _board.getBombs();
         _input = _board.getInput();
         _sprite = Sprite.player_right[playerNumber-1];
+    }
+
+    public void passParameter(Bomber bomber){
+        this.bombRate = bomber.getBombMax();
+        this.bombMax = bomber.getBombMax();
+        this.bombRadius = bomber.getBombRadius();
+        this.typeOfBomb = bomber.getTypeOfBomb();
+        this.superbomb = bomber.isSuperbomb();
+        this.godMode = bomber.isGodMode();
+        this.shield = bomber.isShield();
+        this.wallpassDuration = bomber.getWallpassDuration();
+        this.speedv2 = bomber.getBomberSpeedV2();
     }
 
     public Bomber(int x,int y, Board board, int _playerNumber){
@@ -89,7 +101,7 @@ public class Bomber extends Character {
     }
 
     public void checkCheatcode(){
-        if (playerNumber == 1 && !cheatCode[4]) {
+        if (playerNumber == 1 && !godMode) {
             if (_input.k) {
                 cheatCode[0] = true;
                 //System.out.println('k');
