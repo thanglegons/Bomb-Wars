@@ -54,6 +54,7 @@ public class Game extends Canvas {
 	private Keyboard _input;
 	private boolean _running = false;
 	private boolean _paused = true;
+	private boolean _restarting = false;
 
 	private static Board _board;
 	private Screen screen;
@@ -120,6 +121,16 @@ public class Game extends Canvas {
 		_board.update();
 	}
 
+	public void restart(){
+	    _restarting = true;
+        _board = new Board(this, _input, screen);
+//        start();
+    }
+
+    public void resume(){
+	    _restarting = false;
+    }
+
 	public void start() {
 		_running = true;
 
@@ -131,6 +142,14 @@ public class Game extends Canvas {
 		int updates = 0;
 		requestFocus();
 		while(_running) {
+		    if(_restarting){
+                lastTime = System.nanoTime();
+                timer = System.currentTimeMillis();
+                delta = 0;
+                frames = 0;
+                updates = 0;
+                continue;
+            }
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -174,6 +193,7 @@ public class Game extends Canvas {
 					--_screenDelay;
 			}
 		}
+		System.out.println("END");
 	}
 
 	public static double getBomberSpeed() {
