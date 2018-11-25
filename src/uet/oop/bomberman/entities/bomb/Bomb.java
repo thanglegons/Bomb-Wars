@@ -82,6 +82,7 @@ public class Bomb extends AnimatedEntitiy {
 	 */
 	protected void explode() {
 		if (_exploded) return;
+		Game.playSound("BombGoesOff");
 		_exploded = true;
 		_flames = new Flame[4];
 		//Entity entity_test = this._board.getEntityAt(0,0);

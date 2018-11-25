@@ -3,10 +3,13 @@ package uet.oop.bomberman.gui;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.bomb.Bomb;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Swing Frame chứa toàn bộ các component
@@ -20,7 +23,7 @@ public class Frame extends JFrame {
 
     Game _game;
 
-    public Frame() {
+    public Frame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         _itempanel = new ItemPanel[2];
         _containerpane = new JPanel(new BorderLayout());
         _gamepane = new GamePanel(this);

@@ -4,10 +4,13 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
 
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Tạo vòng lặp cho game, lưu trữ một vài tham số cấu hình toàn cục,
@@ -30,7 +33,7 @@ public class Game extends Canvas {
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
 
-	protected static int SCREENDELAY = 3;
+	protected static int SCREENDELAY = 6;
 
 	protected static int numberOfPlayer;
 
@@ -63,7 +66,9 @@ public class Game extends Canvas {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
-	public Game(Frame frame) {
+	public static Clip themeSound, playerSound, bombGoesOff;
+
+	public Game(Frame frame) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		_frame = frame;
 		_frame.setTitle(TITLE);
 
@@ -72,8 +77,31 @@ public class Game extends Canvas {
 
 		_board = new Board(this, _input, screen);
 		addKeyListener(_input);
+		prepareSound();
 	}
 
+	private void prepareSound() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+        String themeSoundName = "/soundtrack/theme.wav";
+        AudioInputStream audioInputStreamTheme = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(themeSoundName).getFile())));
+        themeSound = AudioSystem.getClip();
+        themeSound.open(audioInputStreamTheme);
+        String playerSoundName = "/soundtrack/player.wav";
+        AudioInputStream audioInputStreamPlayer = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(playerSoundName).getFile())));
+        playerSound = AudioSystem.getClip();
+        playerSound.open(audioInputStreamPlayer);
+        String bombGoesOffSoundName = "/soundtrack/bombGoesOff.wav";
+        AudioInputStream audioInputStreamBombGoesOff = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(bombGoesOffSoundName).getFile())));
+        bombGoesOff = AudioSystem.getClip();
+        bombGoesOff.open(audioInputStreamBombGoesOff);
+    }
+
+    public static void playSound(String nameEntity){
+	    if(nameEntity.equals("BombGoesOff")){
+	        Clip newAudio = bombGoesOff;
+	        newAudio.setFramePosition(0);
+	        newAudio.start();
+        }
+    }
 
 	private void renderGame() {
 		BufferStrategy bs = getBufferStrategy();
@@ -141,6 +169,12 @@ public class Game extends Canvas {
 		int frames = 0;
 		int updates = 0;
 		requestFocus();
+
+		themeSound.loop(Clip.LOOP_CONTINUOUSLY);
+        FloatControl gainControl =
+                (FloatControl) themeSound.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-15.0f); // Reduce volume by 10 decibels.
+        themeSound.start();
 		while(_running) {
 		    if(_restarting){
                 lastTime = System.nanoTime();

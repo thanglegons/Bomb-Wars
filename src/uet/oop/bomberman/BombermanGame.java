@@ -1,22 +1,18 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.bomb.WaterBomb;
 import uet.oop.bomberman.gui.Frame;
-import uet.oop.bomberman.gui.MainMenu;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.io.IOException;
 
 public class BombermanGame {
 
 
 	private static JButton onePlayer, multiPlayer;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 //        SwingUtilities.invokeLater(new Runnable()
 //        {
 //            public void run()
@@ -27,7 +23,4 @@ public class BombermanGame {
         Frame xFrame = new Frame();
 	}
 
-	private static void displayJFrame(){
-        new Frame();
-    }
 }

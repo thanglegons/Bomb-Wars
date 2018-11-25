@@ -20,6 +20,7 @@ public class BFSBomb extends Bomb {
     }
     protected void explode(){
         if (_exploded) return;
+        Game.playSound("BombGoesOff");
         _exploded = true;
         _flames = new Flame[4];
         //Bomber bomber = _board.getBomber();

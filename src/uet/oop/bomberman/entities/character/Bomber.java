@@ -13,6 +13,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 
+import javax.sound.sampled.Clip;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,6 +44,7 @@ public class Bomber extends Character {
     private int typeOfBomb = 0;
     private boolean superbomb = false;
     private int maxTypeOfBomb = 3;
+    private int isPlayingSound = 0;
 
     public Bomber(int x, int y, Board board) {
         super(x, y, board);
@@ -126,6 +128,10 @@ public class Bomber extends Character {
     public void update() {
         clearBombs();
         if (!_alive) {
+            if(isPlayingSound == 1){
+                isPlayingSound = 0;
+                Game.playerSound.stop();
+            }
             afterKill();
             return;
         }
@@ -138,6 +144,18 @@ public class Bomber extends Character {
 
         //if (_timeBetweenPutBombs >= 7500) _timeBetweenPutBombs = 0;
         //else _timeBetweenPutBombs--;
+        if(_input.w || _input.a || _input.s || _input.d){
+            if(isPlayingSound == 0){
+                isPlayingSound = 1;
+                Game.playerSound.loop(Clip.LOOP_CONTINUOUSLY);
+                Game.playerSound.start();
+            }
+        } else{
+            if(isPlayingSound == 1){
+                isPlayingSound = 0;
+                Game.playerSound.stop();
+            }
+        }
         _timeBetweenPutBombs--;
         if (invulnerableTime > 0)
             invulnerableTime--;
