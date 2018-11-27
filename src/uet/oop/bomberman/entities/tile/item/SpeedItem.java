@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.tile.item;
 
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class SpeedItem extends Item {
@@ -15,7 +16,7 @@ public class SpeedItem extends Item {
 		// TODO: xử lý Bomber ăn Item
 		if (used) return false;
 		used = true;
-		Game.setBomberSpeedV2(Game.getBomberSpeedV2()+0.25);
+		((Bomber)e).setBomberSpeedV2(Math.min(1.0,((Bomber)e).getBomberSpeedV2()+0.25));
 		destroy();
 		return false;
 	}

@@ -13,20 +13,25 @@ import uet.oop.bomberman.level.Coordinates;
 public class Bomb extends AnimatedEntitiy {
 
 	protected double _timeToExplode = 120; //2 seconds
+	protected int radius = 1;
 	public int _timeAfter = 20;
 
 	protected Board _board;
 	protected Flame[] _flames;
 	protected boolean _exploded = false;
 	protected boolean _allowedToPassThru = true;
-	private int[] dx = new int[]{0, 1, 0, -1};
-	private int[] dy = new int[]{-1, 0, 1, 0};
+	protected int[] dx = new int[]{0, 1, 0, -1};
+	protected int[] dy = new int[]{-1, 0, 1, 0};
 
-	public Bomb(int x, int y, Board board) {
+	protected Bomber bomber;
+
+	public Bomb(int x, int y, Board board, Bomber _bomber) {
 		_x = x;
 		_y = y;
 		_board = board;
 		_sprite = Sprite.bomb;
+		bomber = _bomber;
+		radius = bomber.getBombRadius();
 	}
 
 	@Override
@@ -74,22 +79,28 @@ public class Bomb extends AnimatedEntitiy {
 		}
 	}
 
+	public void setRadius(int radius){
+		this.radius = radius;
+	}
 	/**
 	 * Xử lý Bomb nổ
 	 */
 	protected void explode() {
+		// Sound
 		if (_exploded) return;
+		Game.playSound("BombGoesOff");
 		_exploded = true;
 		_flames = new Flame[4];
 		//Entity entity_test = this._board.getEntityAt(0,0);
 		// TODO: xử lý khi Character đứng tại vị trí Bomb
-		Bomber bomber = _board.getBomber();
-		if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
-			(bomber).kill();
+		for (Bomber bomber: _board.getBombers()) {
+			if ((bomber).getTileX() == _x && (bomber).getTileY() == _y) {
+				(bomber).kill();
+			}
 		}
 		// TODO: tạo các Flame
 		for (int i=0;i<4;i++){
-			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, Game.getBombRadius(),this._board);
+			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, radius,this._board,bomber);
 		}
 	}
 

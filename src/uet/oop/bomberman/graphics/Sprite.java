@@ -27,22 +27,39 @@ public class Sprite {
 	| Bomber Sprites
 	|--------------------------------------------------------------------------
 	 */
-	public static Sprite player_up = new Sprite(16, 0, 0, SpriteSheet.tiles, 12, 16);
-	public static Sprite player_down = new Sprite(16, 2, 0, SpriteSheet.tiles, 12, 15);
-	public static Sprite player_left = new Sprite(16, 3, 0, SpriteSheet.tiles, 10, 15);
-	public static Sprite player_right = new Sprite(16, 1, 0, SpriteSheet.tiles, 10, 16);
+	public static Sprite[] player_up = new Sprite[]{new Sprite(16, 0, 0, SpriteSheet.tiles, 12, 16),new Sprite(16, 0, 12, SpriteSheet.tiles, 12, 16)};
+	public static Sprite[] player_down = new Sprite[]{new Sprite(16, 2, 0, SpriteSheet.tiles, 12, 15),new Sprite(16, 2, 12, SpriteSheet.tiles, 12, 15)};
+	public static Sprite[] player_left = new Sprite[]{new Sprite(16, 3, 0, SpriteSheet.tiles, 10, 15),new Sprite(16, 3, 12, SpriteSheet.tiles, 10, 15)};
+	public static Sprite[] player_right = new Sprite[]{new Sprite(16, 1, 0, SpriteSheet.tiles, 10, 16),new Sprite(16, 1, 12, SpriteSheet.tiles, 10, 16)};
+
+	public static Sprite[] player_shield_up = new Sprite[]{new Sprite(16, 0, 21, SpriteSheet.tiles, 12, 16),new Sprite(16, 0, 21 + 3, SpriteSheet.tiles, 12, 16)};
+	public static Sprite[] player_shield_down = new Sprite[]{new Sprite(16, 2, 21, SpriteSheet.tiles, 12, 15),new Sprite(16, 2, 21+3, SpriteSheet.tiles, 12, 15)};
+	public static Sprite[] player_shield_left = new Sprite[]{new Sprite(16, 3, 21, SpriteSheet.tiles, 10, 15),new Sprite(16, 3, 21+3, SpriteSheet.tiles, 10, 15)};
+	public static Sprite[] player_shield_right = new Sprite[]{new Sprite(16, 1, 21, SpriteSheet.tiles, 10, 16),new Sprite(16, 1, 21+3, SpriteSheet.tiles, 10, 16)};
 	
-	public static Sprite player_up_1 = new Sprite(16, 0, 1, SpriteSheet.tiles, 12, 16);
-	public static Sprite player_up_2 = new Sprite(16, 0, 2, SpriteSheet.tiles, 12, 15);
+	public static Sprite[] player_up_1 = new Sprite[]{new Sprite(16, 0, 1, SpriteSheet.tiles, 12, 16),new Sprite(16, 0, 12, SpriteSheet.tiles, 12, 16)};
+	public static Sprite[] player_up_2 = new Sprite[]{new Sprite(16, 0, 2, SpriteSheet.tiles, 12, 15),new Sprite(16, 0, 12, SpriteSheet.tiles, 12, 15)};
+
+	public static Sprite[] player_shield_up_1 = new Sprite[]{new Sprite(16, 0, 21+1, SpriteSheet.tiles, 12, 16),new Sprite(16, 0, 21+3+1, SpriteSheet.tiles, 12, 16)};
+	public static Sprite[] player_shield_up_2 = new Sprite[]{new Sprite(16, 0, 21+2, SpriteSheet.tiles, 12, 15),new Sprite(16, 0, 21+3+2, SpriteSheet.tiles, 12, 15)};
 	
-	public static Sprite player_down_1 = new Sprite(16, 2, 1, SpriteSheet.tiles, 12, 15);
-	public static Sprite player_down_2 = new Sprite(16, 2, 2, SpriteSheet.tiles, 12, 16);
+	public static Sprite[] player_down_1 = new Sprite[]{new Sprite(16, 2, 1, SpriteSheet.tiles, 12, 15),new Sprite(16, 2, 12+1, SpriteSheet.tiles, 12, 15)};
+	public static Sprite[] player_down_2 = new Sprite[]{new Sprite(16, 2, 2, SpriteSheet.tiles, 12, 16),new Sprite(16, 2, 12+2, SpriteSheet.tiles, 12, 16)};
+
+	public static Sprite[] player_shield_down_1 = new Sprite[]{new Sprite(16, 2, 21+1, SpriteSheet.tiles, 12, 15),new Sprite(16, 2, 21+3+1, SpriteSheet.tiles, 12, 15)};
+	public static Sprite[] player_shield_down_2 = new Sprite[]{new Sprite(16, 2, 21+2, SpriteSheet.tiles, 12, 16),new Sprite(16, 2, 21+3+2, SpriteSheet.tiles, 12, 16)};
 	
-	public static Sprite player_left_1 = new Sprite(16, 3, 1, SpriteSheet.tiles, 11, 16);
-	public static Sprite player_left_2 = new Sprite(16, 3, 2, SpriteSheet.tiles, 12 ,16);
+	public static Sprite[] player_left_1 = new Sprite[]{new Sprite(16, 3, 1, SpriteSheet.tiles, 11, 16),new Sprite(16, 3, 12+1, SpriteSheet.tiles, 11, 16)};
+	public static Sprite[] player_left_2 = new Sprite[]{new Sprite(16, 3, 2, SpriteSheet.tiles, 12 ,16),new Sprite(16, 3, 12+2, SpriteSheet.tiles, 12 ,16)};
+
+	public static Sprite[] player_shield_left_1 = new Sprite[]{new Sprite(16, 3, 21+1, SpriteSheet.tiles, 11, 16),new Sprite(16, 3, 21+3+1, SpriteSheet.tiles, 11, 16)};
+	public static Sprite[] player_shield_left_2 = new Sprite[]{new Sprite(16, 3, 21+2, SpriteSheet.tiles, 12 ,16),new Sprite(16, 3, 21+3+2, SpriteSheet.tiles, 12 ,16)};
 	
-	public static Sprite player_right_1 = new Sprite(16, 1, 1, SpriteSheet.tiles, 11, 16);
-	public static Sprite player_right_2 = new Sprite(16, 1, 2, SpriteSheet.tiles, 12, 16);
+	public static Sprite[] player_right_1 = new Sprite[]{new Sprite(16, 1, 1, SpriteSheet.tiles, 11, 16),new Sprite(16, 1, 12+1, SpriteSheet.tiles, 11, 16)};
+	public static Sprite[] player_right_2 = new Sprite[]{new Sprite(16, 1, 2, SpriteSheet.tiles, 12, 16),new Sprite(16, 1, 12+2, SpriteSheet.tiles, 12, 16)};
+
+	public static Sprite[] player_shield_right_1 = new Sprite[]{new Sprite(16, 1, 21+1, SpriteSheet.tiles, 11, 16),new Sprite(16, 1, 21+3+1, SpriteSheet.tiles, 11, 16)};
+	public static Sprite[] player_shield_right_2 = new Sprite[]{new Sprite(16, 1, 21+2, SpriteSheet.tiles, 12, 16),new Sprite(16, 1, 21+3+2, SpriteSheet.tiles, 12, 16)};
 	
 	public static Sprite player_dead1 = new Sprite(16, 4, 2, SpriteSheet.tiles, 14, 16);
 	public static Sprite player_dead2 = new Sprite(16, 5, 2, SpriteSheet.tiles, 13, 15);
@@ -62,8 +79,27 @@ public class Sprite {
 	public static Sprite balloom_right2 = new Sprite(16, 10, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right3 = new Sprite(16, 10, 2, SpriteSheet.tiles, 16, 16);
 	
-	public static Sprite balloom_dead = new Sprite(16, 9, 3, SpriteSheet.tiles, 16, 16);
-	
+	public static Sprite balloom_dead = new Sprite(16, 13, 3, SpriteSheet.tiles, 16, 16);
+	//Flame
+	public static Sprite flameMons_left1 = new Sprite(16, 13, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite flameMons_left2 = new Sprite(16, 13, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite flameMons_left3 = new Sprite(16, 13, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite flameMons_right1 = new Sprite(16, 14, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite flameMons_right2 = new Sprite(16, 14, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite flameMons_right3 = new Sprite(16, 14, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite flameMons_dead = new Sprite(16, 13, 3, SpriteSheet.tiles, 16, 16);
+	//Ghost
+	public static Sprite ghost_left1 = new Sprite(16, 17, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite ghost_left2 = new Sprite(16, 17, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite ghost_left3 = new Sprite(16, 17, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite ghost_right1 = new Sprite(16, 18, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite ghost_right2 = new Sprite(16, 18, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite ghost_right3 = new Sprite(16, 18, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite ghost_dead = new Sprite(16, 17, 3, SpriteSheet.tiles, 16, 16);
 	//ONEAL
 	public static Sprite oneal_left1 = new Sprite(16, 11, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite oneal_left2 = new Sprite(16, 11, 1, SpriteSheet.tiles, 16, 16);
@@ -74,7 +110,16 @@ public class Sprite {
 	public static Sprite oneal_right3 = new Sprite(16, 12, 2, SpriteSheet.tiles, 16, 16);
 	
 	public static Sprite oneal_dead = new Sprite(16, 11, 3, SpriteSheet.tiles, 16, 16);
-	
+	//BOSS
+	public static Sprite boss_left1 = new Sprite(16, 15, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite boss_left2 = new Sprite(16, 15, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite boss_left3 = new Sprite(16, 15, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite boss_right1 = new Sprite(16, 16, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite boss_right2 = new Sprite(16, 16, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite boss_right3 = new Sprite(16, 16, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite boss_dead = new Sprite(16, 15, 3, SpriteSheet.tiles, 16, 16);
 	//Doll
 	public static Sprite doll_left1 = new Sprite(16, 13, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite doll_left2 = new Sprite(16, 13, 1, SpriteSheet.tiles, 16, 16);
@@ -156,6 +201,36 @@ public class Sprite {
 	public static Sprite explosion_vertical_down_last2 = new Sprite(16, 3, 6, SpriteSheet.tiles, 16, 16);
 	
 	/*
+		WaterSegment
+	 */
+	public static Sprite water_bomb_exploded = new Sprite(16, 0, 4-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_bomb_exploded1 = new Sprite(16, 0, 5-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_bomb_exploded2 = new Sprite(16, 0, 6-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_vertical = new Sprite(16, 1, 5-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical1 = new Sprite(16, 2, 5-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical2 = new Sprite(16, 3, 5-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_horizontal = new Sprite(16, 1, 7-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal1 = new Sprite(16, 1, 8-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal2 = new Sprite(16, 1, 9-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_horizontal_left_last = new Sprite(16, 0, 7-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_left_last1 = new Sprite(16, 0, 8-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_left_last2 = new Sprite(16, 0, 9, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_horizontal_right_last = new Sprite(16, 2, 7-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_right_last1 = new Sprite(16, 2, 8-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_horizontal_right_last2 = new Sprite(16, 2, 9-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_vertical_top_last = new Sprite(16, 1, 4-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_top_last1 = new Sprite(16, 2, 4-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_top_last2 = new Sprite(16, 3, 4-4+15, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite water_explosion_vertical_down_last = new Sprite(16, 1, 6-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_down_last1 = new Sprite(16, 2, 6-4+15, SpriteSheet.tiles, 16, 16);
+	public static Sprite water_explosion_vertical_down_last2 = new Sprite(16, 3, 6-4+15, SpriteSheet.tiles, 16, 16);
+	/*
 	|--------------------------------------------------------------------------
 	| Brick FlameSegment
 	|--------------------------------------------------------------------------
@@ -177,6 +252,7 @@ public class Sprite {
 	public static Sprite powerup_bombpass = new Sprite(16, 5, 10, SpriteSheet.tiles, 16, 16);
 	public static Sprite powerup_flamepass = new Sprite(16, 6, 10, SpriteSheet.tiles, 16, 16);
 	public static Sprite powerup_shield = new Sprite(16,8,10, SpriteSheet.tiles,16,16);
+	public static Sprite powerup_superbomb = new Sprite(16,9,10, SpriteSheet.tiles,16,16);
 	
 	public Sprite(int size, int x, int y, SpriteSheet sheet, int rw, int rh) {
 		SIZE = size;
