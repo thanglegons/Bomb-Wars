@@ -79,7 +79,7 @@ public class Sprite {
 	public static Sprite balloom_right2 = new Sprite(16, 10, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right3 = new Sprite(16, 10, 2, SpriteSheet.tiles, 16, 16);
 	
-	public static Sprite balloom_dead = new Sprite(16, 13, 3, SpriteSheet.tiles, 16, 16);
+	public static Sprite balloom_dead = new Sprite(16, 9, 3, SpriteSheet.tiles, 16, 16);
 	//Flame
 	public static Sprite flameMons_left1 = new Sprite(16, 13, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite flameMons_left2 = new Sprite(16, 13, 1, SpriteSheet.tiles, 16, 16);
@@ -154,9 +154,9 @@ public class Sprite {
 	public static Sprite kondoria_dead = new Sprite(16, 10, 8, SpriteSheet.tiles, 16, 16);
 	
 	//ALL
-	public static Sprite mob_dead1 = new Sprite(16, 15, 0, SpriteSheet.tiles, 16, 16);
-	public static Sprite mob_dead2 = new Sprite(16, 15, 1, SpriteSheet.tiles, 16, 16);
-	public static Sprite mob_dead3 = new Sprite(16, 15, 2, SpriteSheet.tiles, 16, 16);
+	public static Sprite mob_dead1 = new Sprite(16, 19, 0, SpriteSheet.tiles, 16, 16);
+	public static Sprite mob_dead2 = new Sprite(16, 19, 1, SpriteSheet.tiles, 16, 16);
+	public static Sprite mob_dead3 = new Sprite(16, 19, 2, SpriteSheet.tiles, 16, 16);
 	
 	/*
 	|--------------------------------------------------------------------------

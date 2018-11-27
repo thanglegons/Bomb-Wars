@@ -33,7 +33,7 @@ public class Game extends Canvas {
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
 
-	protected static int SCREENDELAY = 6;
+	protected static int SCREENDELAY = 2;
 
 	protected static int numberOfPlayer;
 
@@ -175,6 +175,9 @@ public class Game extends Canvas {
         FloatControl gainControl =
                 (FloatControl) themeSound.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(-15.0f); // Reduce volume by 10 decibels.
+		FloatControl gainControl2 =
+				(FloatControl) playerSound.getControl(FloatControl.Type.MASTER_GAIN);
+		gainControl2.setValue(-10.0f); // Reduce volume by 10 decibels.
         themeSound.start();
 		while(_running) {
 		    if(_restarting){
