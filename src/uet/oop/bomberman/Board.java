@@ -141,11 +141,16 @@ public class Board implements IRender {
 		//System.out.println(Game.getWallpassDuration());
 		//System.out.println(portal.getX()+" " +portal.getY() +" " +getBomber().getTileX() + " "+ getBomber().getTileY());
 		if (Game.numberOfPlayer == 1&& detectNoEnemies() && getBomber().getTileX() == portal.getX()
+<<<<<<< HEAD
 			&& getBomber().getTileY() == portal.getY()) {
 			if (_levelLoader.getLevel() < 4)
 				nextLevel(); else
 					endGame();
 		}
+=======
+			&& getBomber().getTileY() == portal.getY())
+			nextLevel();
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 	}
 	
 	public void endGame() {

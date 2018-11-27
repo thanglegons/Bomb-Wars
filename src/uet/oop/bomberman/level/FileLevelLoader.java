@@ -5,7 +5,13 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.character.Bomber;
+<<<<<<< HEAD
 import uet.oop.bomberman.entities.character.enemy.*;
+=======
+import uet.oop.bomberman.entities.character.enemy.Balloon;
+import uet.oop.bomberman.entities.character.enemy.FlameMonster;
+import uet.oop.bomberman.entities.character.enemy.Oneal;
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.Wall;
@@ -102,6 +108,7 @@ public class FileLevelLoader extends LevelLoader {
                     int xE = j, yE = i;
                     _board.addCharacter(new FlameMonster(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board));
                     _board.addEntity(xE + yE * _width, new Grass(xE, yE, Sprite.grass));
+<<<<<<< HEAD
                 }else if (this._map[i][j] == '4') {
                     // Add Balloon
                     int xE = j, yE = i;
@@ -112,6 +119,8 @@ public class FileLevelLoader extends LevelLoader {
                     int xE = j, yE = i;
                     _board.addCharacter(new Boss(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board));
                     _board.addEntity(xE + yE * _width, new Grass(xE, yE, Sprite.grass));
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
                 }else if (this._map[i][j] == 'b') {
                     // Add BombItem
                     int xI = j, yI = i;

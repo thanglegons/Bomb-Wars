@@ -31,7 +31,10 @@ public class Bomb extends AnimatedEntitiy {
 		_board = board;
 		_sprite = Sprite.bomb;
 		bomber = _bomber;
+<<<<<<< HEAD
 		radius = bomber.getBombRadius();
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 	}
 
 	@Override
@@ -100,7 +103,11 @@ public class Bomb extends AnimatedEntitiy {
 		}
 		// TODO: tạo các Flame
 		for (int i=0;i<4;i++){
+<<<<<<< HEAD
 			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, radius,this._board,bomber);
+=======
+			_flames[i] = new Flame((int)_x + dx[i],(int)_y + dy[i],i, bomber.getBombRadius(),this._board,bomber);
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 		}
 	}
 

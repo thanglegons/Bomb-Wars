@@ -8,7 +8,10 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
+<<<<<<< HEAD
 import uet.oop.bomberman.entities.tile.Wall;
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
 
@@ -95,7 +98,11 @@ public class AIMedium extends AI {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int calculateDirection(int currentDirection, boolean rateApplied, double curX, double curY, double _speed, boolean ghost) {
+=======
+	public int calculateDirection(int currentDirection, boolean rateApplied, double curX, double curY, double _speed) {
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 		int newDirection = currentDirection;
 		Board board = Game.getBoard();
 		canGo = new int[4];
@@ -114,6 +121,7 @@ public class AIMedium extends AI {
 				Entity curEntity = board.getEntity(i, j, null);
 				if(curEntity instanceof Bomb) map[i][j] = 2;
 				else if(curEntity instanceof FlameSegment) map[i][j] = 2;
+<<<<<<< HEAD
 				else {
 					if (!ghost) {
 						if (curEntity instanceof LayeredEntity) {
@@ -129,6 +137,14 @@ public class AIMedium extends AI {
 							map[i][j] = 1;
 						}
 					}
+=======
+				else if(curEntity instanceof LayeredEntity) {
+					if(((LayeredEntity) curEntity).getTopEntity().getSprite() == Sprite.brick){
+						map[i][j] = 1;
+					}
+				} else if(curEntity != null && curEntity.getSprite() == Sprite.wall){
+					map[i][j] = 1;
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 				}
 			}
 		}
@@ -153,7 +169,10 @@ public class AIMedium extends AI {
 //					if(dir == 3){
 //					    System.out.println("??" + curTileX + " " + curTileY);
 //                    }
+<<<<<<< HEAD
 					//System.out.println(curTileX+ " " + curTileY);
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 					if(map[curTileX][curTileY] >= 1) canGo[dir] = 1;
 				}
 			}
@@ -162,7 +181,10 @@ public class AIMedium extends AI {
 			if (random.nextDouble() < CHANGE_RATE || !rateApplied)
 				newDirection = random.nextInt(4);
 		} else{
+<<<<<<< HEAD
 			//System.out.println(canGo[0] + " " + canGo[1] + " " + canGo[2] + " " + canGo[3]);
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 //			System.out.println(tileEX + " " + tileEY);
 			int minSoFar = 100000;
 			for(int i = 0; i < 4; i++){
@@ -170,14 +192,22 @@ public class AIMedium extends AI {
 //			    System.out.println(i + "-");
                 int nextEX = Coordinates.pixelToTile(curX + dx[i] * _speed + gx[i]);
                 int nextEY = Coordinates.pixelToTile(curY + dy[i] * _speed + gy[i]);
+<<<<<<< HEAD
 			    if (map[nextEX][nextEY] != 0) continue;
 			    int curPath = shortestPath(nextEX, nextEY);
 			    //System.out.println(minSoFar);
+=======
+			    if(map[nextEX][nextEY] != 0) continue;
+			    int curPath = shortestPath(nextEX, nextEY);
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 			    if(curPath < minSoFar){
 			        minSoFar = curPath;
 			        newDirection = i;
                 }
+<<<<<<< HEAD
 				//System.out.println(nextEX + " " +  nextEY +" " + curPath+" " + i);
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
             }
             if(minSoFar == 100000){
                 if(canGo[currentDirection] != 0){
@@ -193,7 +223,10 @@ public class AIMedium extends AI {
                 }
             }
 		}
+<<<<<<< HEAD
 		System.out.println(newDirection);
+=======
+>>>>>>> 38449e41b549ad12619837da8530164981830952
 		return newDirection;
 	}
 
