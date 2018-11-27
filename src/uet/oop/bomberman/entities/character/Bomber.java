@@ -63,7 +63,6 @@ public class Bomber extends Character {
         this.shield = bomber.isShield();
         this.wallpassDuration = bomber.getWallpassDuration();
         this.speedv2 = bomber.getBomberSpeedV2();
-<<<<<<< HEAD
     }
 
     public Bomber(int x,int y, Board board, int _playerNumber){
@@ -91,35 +90,6 @@ public class Bomber extends Character {
         }
     }
 
-=======
-    }
-
-    public Bomber(int x,int y, Board board, int _playerNumber){
-        super(x, y, board);
-        //_bombs = _board.getBombs();
-        _input = _board.getInput();
-        _sprite = Sprite.player_right[playerNumber-1];
-        playerNumber = _playerNumber;
-        shield = true;
-        godMode = false;
-    }
-
-    private void checkCollision() {
-        Entity entity = this._board.getEntityAt(getTileX(), getTileY());
-        if (entity instanceof LayeredEntity) {
-            entity = ((LayeredEntity) entity).getTopEntity();
-            if (entity instanceof Item)
-                entity.collide(this);
-        }
-        if ((_board.getCharacterAtExcluding(getTileX(), getTileY(), this) instanceof Enemy))
-            kill();
-        FlameSegment flameSegment = _board.getFlameSegmentAt(getTileX(), getTileY());
-        if (flameSegment != null) {
-            flameSegment.collide(this);
-        }
-    }
-
->>>>>>> 38449e41b549ad12619837da8530164981830952
 
     private void checkTypeOfBomb() {
         if ((playerNumber == 1 && _input.r) && changeBombCoolDown ==0){
@@ -174,10 +144,7 @@ public class Bomber extends Character {
 
         //if (_timeBetweenPutBombs >= 7500) _timeBetweenPutBombs = 0;
         //else _timeBetweenPutBombs--;
-<<<<<<< HEAD
         //Sound
-=======
->>>>>>> 38449e41b549ad12619837da8530164981830952
         if(_input.w || _input.a || _input.s || _input.d){
             if(isPlayingSound == 0){
                 isPlayingSound = 1;
@@ -567,10 +534,7 @@ public class Bomber extends Character {
 
     public void addBombRadius(int bombRadius) {
         this.bombRadius += bombRadius;
-<<<<<<< HEAD
         bombRadius = Math.min(10,bombRadius);
-=======
->>>>>>> 38449e41b549ad12619837da8530164981830952
     }
 
     public int getBombMax() {
@@ -579,24 +543,16 @@ public class Bomber extends Character {
 
     public void setBombMax(int _bombMax) {
         bombMax = _bombMax;
-<<<<<<< HEAD
         bombMax = Math.min(5,bombMax);
-=======
->>>>>>> 38449e41b549ad12619837da8530164981830952
     }
 
     public boolean isSuperbomb() {
         return superbomb;
     }
 
-<<<<<<< HEAD
     public void switchSuperbomb() {
         if (superbomb) superbomb = false;
         else superbomb = true;
-=======
-    public void setSuperbomb(boolean _superbomb) {
-        superbomb = _superbomb;
->>>>>>> 38449e41b549ad12619837da8530164981830952
     }
 
     public int getTypeOfBomb() {

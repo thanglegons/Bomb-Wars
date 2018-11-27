@@ -99,17 +99,12 @@ public class Flame extends Entity {
                     _flameSegments[i].collide(character);
                 }
                 FlameSegment flameSegment = _board.getFlameSegmentAt(xOrigin + i * dx[_direction],yOrigin + i * dy[_direction]);
-<<<<<<< HEAD
                 if (_flameSegments!= null) {
                     for (int j = 1; j <= 1; j++) {
                         _flameSegments[i].collide(flameSegment);
                         flameSegment = _board.getFlameSegmentAt(xOrigin + i * dx[_direction], yOrigin + i * dy[_direction]);
                     }
                 }
-=======
-                if (flameSegment!= null)
-                _flameSegments[i].collide(flameSegment);
->>>>>>> 38449e41b549ad12619837da8530164981830952
             }
         }
     }
@@ -129,14 +124,9 @@ public class Flame extends Entity {
             Entity entity = this._board.getEntityAt(xOrigin + i * dx[_direction], yOrigin + i * dy[_direction]);
             if (!bomber.isSuperbomb()) {
                 if (entity.getSprite() == Sprite.wall ||
-<<<<<<< HEAD
                         (entity instanceof LayeredEntity && ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick)
                 || (bomb != null && bomb instanceof WaterBomb)) {
                     if (!(entity.getSprite() == Sprite.wall) && !(bomb != null && bomb instanceof WaterBomb)) {
-=======
-                        (entity instanceof LayeredEntity && ((LayeredEntity) entity).getTopEntity().getSprite() == Sprite.brick)) {
-                    if (!(entity.getSprite() == Sprite.wall)) {
->>>>>>> 38449e41b549ad12619837da8530164981830952
                         if (!_water)
                         ((LayeredEntity) entity).getTopEntity().collide(entity);
                     }

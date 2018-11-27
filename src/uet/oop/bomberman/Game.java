@@ -81,12 +81,8 @@ public class Game extends Canvas {
 	}
 
 	private void prepareSound() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-<<<<<<< HEAD
         //Sound
 		String themeSoundName = "/soundtrack/theme.wav";
-=======
-        String themeSoundName = "/soundtrack/theme.wav";
->>>>>>> 38449e41b549ad12619837da8530164981830952
         AudioInputStream audioInputStreamTheme = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(themeSoundName).getFile())));
         themeSound = AudioSystem.getClip();
         themeSound.open(audioInputStreamTheme);
@@ -174,11 +170,7 @@ public class Game extends Canvas {
 		int frames = 0;
 		int updates = 0;
 		requestFocus();
-<<<<<<< HEAD
 		//Sound
-=======
-
->>>>>>> 38449e41b549ad12619837da8530164981830952
 		themeSound.loop(Clip.LOOP_CONTINUOUSLY);
         FloatControl gainControl =
                 (FloatControl) themeSound.getControl(FloatControl.Type.MASTER_GAIN);

@@ -23,11 +23,7 @@ public class AILow extends AI {
 	private double[] gy = new double[]{0, Game.TILES_SIZE / 2, Game.TILES_SIZE, Game.TILES_SIZE / 2};
 
 	@Override
-<<<<<<< HEAD
 	public int calculateDirection(int currentDirection, boolean rateApplied, double curX, double curY, double _speed, boolean ghost) {
-=======
-	public int calculateDirection(int currentDirection, boolean rateApplied, double curX, double curY, double _speed) {
->>>>>>> 38449e41b549ad12619837da8530164981830952
 		int newDirection = currentDirection;
 		Board board = Game.getBoard();
 		canGo = new int[4];
@@ -70,15 +66,10 @@ public class AILow extends AI {
 					if(dir == 3){
 						if(!((i == 0 && j == 0) || (i == 0 && j == 1))) continue;
 					}
-<<<<<<< HEAD
 					double additionx= dx[dir] * _speed;
 					double additiony =dy[dir] * _speed;
 					int curTileX = Coordinates.pixelToTile(curX + additionx + i * (Game.TILES_SIZE - 1));
 					int curTileY = Coordinates.pixelToTile(curY + additiony + j * (Game.TILES_SIZE - 1));
-=======
-					int curTileX = Coordinates.pixelToTile(curX + dx[dir] * _speed + i * (Game.TILES_SIZE - 1));
-					int curTileY = Coordinates.pixelToTile((curY + dy[dir] * _speed + j * (Game.TILES_SIZE - 1)));
->>>>>>> 38449e41b549ad12619837da8530164981830952
 					if(map[curTileX][curTileY] >= 1) canGo[dir] = 1;
 				}
 			}
