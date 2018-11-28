@@ -52,6 +52,14 @@ public class Board implements IRender {
 		
 		loadLevel(1); //start in level 1
 	}
+
+    public Board(Game game, Keyboard input, Screen screen, boolean isMulti) {
+        _game = game;
+        _input = input;
+        _screen = screen;
+
+        loadMulti(1); //start in level 1
+    }
 	
 	@Override
 	public void update() {
@@ -123,6 +131,34 @@ public class Board implements IRender {
 			_levelLoader = new FileLevelLoader(this, level);
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
 			
+			_levelLoader.createEntities();
+			_bombers.clear();
+			for (Character character: _characters){
+				if (character instanceof Bomber){
+					_bombers.add((Bomber)character);
+					((Bomber) character).setBombRate(((Bomber) character).getBombMax());
+				}
+			}
+		} catch (LoadLevelException e) {
+			endGame();
+		}
+	}
+
+	public void loadMulti(int level){
+		if (level == 2)
+			System.out.println("a");
+		boss = null;
+		_time = Game.TIME;
+		_screenToShow = 2;
+		_game.resetScreenDelay();
+		_game.pause();
+		_characters.clear();
+		_freeFlameSegment.clear();
+		_bombs.clear();
+		_messages.clear();
+		try {
+			_levelLoader = new FileLevelLoader(this, level, true);
+			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
 			_levelLoader.createEntities();
 			_bombers.clear();
 			for (Character character: _characters){

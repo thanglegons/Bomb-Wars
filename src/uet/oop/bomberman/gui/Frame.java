@@ -43,6 +43,13 @@ public class Frame extends JFrame {
                _game.resume();
             }
         });
+        _infopanel.multiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _game.loadMulti();
+                _game.resume();
+            }
+        });
         add(_containerpane);
 
         setResizable(false);

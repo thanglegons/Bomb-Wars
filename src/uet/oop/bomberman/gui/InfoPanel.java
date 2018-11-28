@@ -14,7 +14,7 @@ public class InfoPanel extends JPanel {
 	
 	private JLabel timeLabel;
 	private JLabel pointsLabel;
-	public JButton testButton;
+	public JButton testButton, multiButton;
 	/*private JLabel shieldLabel;
 	private JLabel wallpassLabel;*/
 
@@ -25,7 +25,8 @@ public class InfoPanel extends JPanel {
 		timeLabel.setForeground(Color.white);
 		timeLabel.setHorizontalAlignment(JLabel.CENTER);
 
-		testButton = new JButton("Restart");
+		testButton = new JButton("one-player");
+		multiButton = new JButton("multi-player");
 
 
 		/*shieldLabel = new JLabel("Shield: " + Game.isShield());
@@ -41,6 +42,7 @@ public class InfoPanel extends JPanel {
 		pointsLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		add(testButton);
+		add(multiButton);
 		add(timeLabel);
 		add(pointsLabel);
 		/*add(shieldLabel);

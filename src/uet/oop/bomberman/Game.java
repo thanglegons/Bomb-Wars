@@ -159,7 +159,11 @@ public class Game extends Canvas {
 	public void restart(){
 		_restarting = true;
 		_board = new Board(this, _input, screen);
-//        start();
+	}
+
+	public void loadMulti(){
+        _restarting = true;
+        _board = new Board(this, _input, screen, true);
 	}
 
 	public void resume(){

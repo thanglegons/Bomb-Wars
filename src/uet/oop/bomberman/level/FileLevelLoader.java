@@ -32,6 +32,11 @@ public class FileLevelLoader extends LevelLoader {
         super(board, level);
     }
 
+    public FileLevelLoader(Board board, int level, boolean isMulti) throws LoadLevelException {
+        super(board, level, isMulti);
+        System.out.println("hi");
+    }
+
     @Override
     public void loadLevel(int level) {
         try {
@@ -51,6 +56,27 @@ public class FileLevelLoader extends LevelLoader {
                 String curRow = in.readLine();
                 for (int j = 0; j < this._width; j++) {
 //					System.out.println(curRow);
+                    this._map[i][j] = curRow.charAt(j);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadMultiMap(int level){
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(getClass().getResource("/levels/multiplayerLevel/Level" + String.valueOf(level) + ".txt").getFile()));
+            String[] x = in.readLine().split(" ");
+            this._level = Integer.valueOf(x[0]);
+            this._width = Integer.valueOf(x[2]);
+            this._height = Integer.valueOf(x[1]);
+            this._map = new char[this._height][this._width];
+            for (int i = 0; i < this._height; i++) {
+                String curRow = in.readLine();
+                for (int j = 0; j < this._width; j++) {
                     this._map[i][j] = curRow.charAt(j);
                 }
             }

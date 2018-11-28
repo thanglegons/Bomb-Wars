@@ -17,9 +17,16 @@ public abstract class LevelLoader {
 		loadLevel(level);
 	}
 
+    public LevelLoader(Board board, int level, boolean isMulti) throws LoadLevelException {
+        _board = board;
+        loadMultiMap(level);
+    }
+
 	public abstract void loadLevel(int level) throws LoadLevelException;
 
 	public abstract void createEntities();
+
+	public abstract void loadMultiMap(int level) throws LoadLevelException;
 
 	public int getWidth() {
 		return _width;
