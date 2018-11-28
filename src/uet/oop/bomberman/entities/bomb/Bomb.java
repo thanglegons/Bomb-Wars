@@ -10,6 +10,10 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
 
+import javax.sound.sampled.FloatControl;
+
+import static uet.oop.bomberman.Game.playerSound;
+
 public class Bomb extends AnimatedEntitiy {
 
 	protected double _timeToExplode = 120; //2 seconds

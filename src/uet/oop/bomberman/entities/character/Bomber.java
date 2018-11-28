@@ -14,9 +14,12 @@ import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static uet.oop.bomberman.Game.playerSound;
 
 public class Bomber extends Character {
 
@@ -71,7 +74,7 @@ public class Bomber extends Character {
         _input = _board.getInput();
         _sprite = Sprite.player_right[playerNumber-1];
         playerNumber = _playerNumber;
-        shield = true;
+        //shield = true;
         godMode = false;
     }
 
@@ -130,7 +133,7 @@ public class Bomber extends Character {
         if (!_alive) {
             if(isPlayingSound == 1){
                 isPlayingSound = 0;
-                Game.playerSound.stop();
+                playerSound.stop();
             }
             afterKill();
             return;
@@ -148,13 +151,16 @@ public class Bomber extends Character {
         if(_input.w || _input.a || _input.s || _input.d){
             if(isPlayingSound == 0){
                 isPlayingSound = 1;
-                Game.playerSound.loop(Clip.LOOP_CONTINUOUSLY);
-                Game.playerSound.start();
+                playerSound.loop(Clip.LOOP_CONTINUOUSLY);
+                FloatControl gainControl =
+                        (FloatControl) playerSound.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-30f);
+                playerSound.start();
             }
         } else{
             if(isPlayingSound == 1){
                 isPlayingSound = 0;
-                Game.playerSound.stop();
+                playerSound.stop();
             }
         }
         _timeBetweenPutBombs--;

@@ -19,21 +19,20 @@ public class Frame extends JFrame {
     public GamePanel _gamepane;
     private JPanel _containerpane;
     private InfoPanel _infopanel;
-    private ItemPanel[] _itempanel;
+    private ItemPanel _itempanel;
 
     Game _game;
 
     public Frame() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        _itempanel = new ItemPanel[2];
+        _itempanel = new ItemPanel();
         _containerpane = new JPanel(new BorderLayout());
         _gamepane = new GamePanel(this);
         _infopanel = new InfoPanel(_gamepane.getGame());
-        _itempanel[0] = new ItemPanel();
-        _itempanel[1] = new ItemPanel();
+        _itempanel = new ItemPanel();
 
         _containerpane.add(_infopanel, BorderLayout.PAGE_START);
         _containerpane.add(_gamepane, BorderLayout.CENTER);
-        _containerpane.add(_itempanel[0],BorderLayout.PAGE_END);
+        _containerpane.add(_itempanel,BorderLayout.PAGE_END);
 
         _game = _gamepane.getGame();
         Frame x = this;
@@ -54,6 +53,9 @@ public class Frame extends JFrame {
         _game.start();
     }
 
+    public void setBossLife(int life){
+        _itempanel.setBossLife(life);
+    }
     public void setTime(int time) {
         _infopanel.setTime(time);
     }
@@ -63,20 +65,22 @@ public class Frame extends JFrame {
     }
 
     public void setShield(int player, boolean shield){
-        _itempanel[player].setShield(shield);
+        _itempanel.setShield(player,shield);
     }
 
     public void setWallpass(int player, int t){
-        _itempanel[player].setWallpassLabel(t);
+        _itempanel.setWallpassLabel(player,t);
     }
 
     public void changeTypeOfBomb(int player, int typeOfBomb){
-        _itempanel[player].changeTypeOfBombLabel(typeOfBomb);
+        _itempanel.changeTypeOfBombLabel(player,typeOfBomb);
     }
     public void changeMode(boolean multi){
-        if (multi) {
-            _containerpane.add(_itempanel[1], BorderLayout.PAGE_START);
-            _containerpane.remove(_infopanel);
-        }
+        _itempanel.switchMode(multi);
+    }
+    public void addBoss(boolean remove){
+        if (!remove)
+        _itempanel.addBoss();
+        else _itempanel.removeBoss();
     }
 }

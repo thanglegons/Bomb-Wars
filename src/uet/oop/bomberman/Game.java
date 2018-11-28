@@ -24,6 +24,9 @@ public class Game extends Canvas {
 
 	public static int SCALE = 3;
 
+	protected static boolean multi = false;
+	protected static boolean lastStage = false;
+
 	public static final String TITLE = "ShitGame";
 
 	protected static final int BOMBRATE = 2;
@@ -81,28 +84,31 @@ public class Game extends Canvas {
 	}
 
 	private void prepareSound() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-        //Sound
+		//Sound
 		String themeSoundName = "/soundtrack/theme.wav";
-        AudioInputStream audioInputStreamTheme = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(themeSoundName).getFile())));
-        themeSound = AudioSystem.getClip();
-        themeSound.open(audioInputStreamTheme);
-        String playerSoundName = "/soundtrack/player.wav";
-        AudioInputStream audioInputStreamPlayer = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(playerSoundName).getFile())));
-        playerSound = AudioSystem.getClip();
-        playerSound.open(audioInputStreamPlayer);
-        String bombGoesOffSoundName = "/soundtrack/bombGoesOff.wav";
-        AudioInputStream audioInputStreamBombGoesOff = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(bombGoesOffSoundName).getFile())));
-        bombGoesOff = AudioSystem.getClip();
-        bombGoesOff.open(audioInputStreamBombGoesOff);
-    }
+		AudioInputStream audioInputStreamTheme = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(themeSoundName).getFile())));
+		themeSound = AudioSystem.getClip();
+		themeSound.open(audioInputStreamTheme);
+		String playerSoundName = "/soundtrack/player.wav";
+		AudioInputStream audioInputStreamPlayer = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(playerSoundName).getFile())));
+		playerSound = AudioSystem.getClip();
+		playerSound.open(audioInputStreamPlayer);
+		String bombGoesOffSoundName = "/soundtrack/bombGoesOff.wav";
+		AudioInputStream audioInputStreamBombGoesOff = AudioSystem.getAudioInputStream(new File(String.valueOf(getClass().getResource(bombGoesOffSoundName).getFile())));
+		bombGoesOff = AudioSystem.getClip();
+		bombGoesOff.open(audioInputStreamBombGoesOff);
+	}
 
-    public static void playSound(String nameEntity){
-	    if(nameEntity.equals("BombGoesOff")){
-	        Clip newAudio = bombGoesOff;
-	        newAudio.setFramePosition(0);
-	        newAudio.start();
-        }
-    }
+	public static void playSound(String nameEntity){
+		if(nameEntity.equals("BombGoesOff")){
+			Clip newAudio = bombGoesOff;
+			newAudio.setFramePosition(0);
+			FloatControl gainControl =
+					(FloatControl) newAudio.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(-30f);
+			newAudio.start();
+		}
+	}
 
 	private void renderGame() {
 		BufferStrategy bs = getBufferStrategy();
@@ -151,14 +157,14 @@ public class Game extends Canvas {
 	}
 
 	public void restart(){
-	    _restarting = true;
-        _board = new Board(this, _input, screen);
+		_restarting = true;
+		_board = new Board(this, _input, screen);
 //        start();
-    }
+	}
 
-    public void resume(){
-	    _restarting = false;
-    }
+	public void resume(){
+		_restarting = false;
+	}
 
 	public void start() {
 		_running = true;
@@ -172,22 +178,22 @@ public class Game extends Canvas {
 		requestFocus();
 		//Sound
 		themeSound.loop(Clip.LOOP_CONTINUOUSLY);
-        FloatControl gainControl =
-                (FloatControl) themeSound.getControl(FloatControl.Type.MASTER_GAIN);
-        gainControl.setValue(-15.0f); // Reduce volume by 10 decibels.
+		FloatControl gainControl =
+				(FloatControl) themeSound.getControl(FloatControl.Type.MASTER_GAIN);
+		gainControl.setValue(-15.0f); // Reduce volume by 10 decibels.
 		FloatControl gainControl2 =
 				(FloatControl) playerSound.getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl2.setValue(-10.0f); // Reduce volume by 10 decibels.
-        themeSound.start();
+		themeSound.start();
 		while(_running) {
-		    if(_restarting){
-                lastTime = System.nanoTime();
-                timer = System.currentTimeMillis();
-                delta = 0;
-                frames = 0;
-                updates = 0;
-                continue;
-            }
+			if(_restarting){
+				lastTime = System.nanoTime();
+				timer = System.currentTimeMillis();
+				delta = 0;
+				frames = 0;
+				updates = 0;
+				continue;
+			}
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -207,12 +213,27 @@ public class Game extends Canvas {
 			} else {
 				renderGame();
 			}
-
-			if (numberOfPlayer > 1)
-				_frame.changeMode(true);
 			frames++;
-				for (int i=0;i<_board.getBombers().size();i++)
-			_frame.setShield(i, _board.getBombers().get(i).isShield());
+			if (!multi && numberOfPlayer > 1) {
+				_frame.changeMode(true);
+				multi = true;
+			}
+			if (multi && numberOfPlayer == 1){
+				_frame.changeMode(false);
+				multi = false;
+			}
+			if (!lastStage && _board.getBoss() != null ){
+				_frame.addBoss(false);
+				lastStage = true;
+			}
+			if (lastStage && _board.getBoss() == null){
+				_frame.addBoss(true);
+				lastStage = false;
+			}
+			if (lastStage)
+			_frame.setBossLife(_board.getBoss().getLife());
+			for (int i=0;i<_board.getBombers().size();i++)
+				_frame.setShield(i, _board.getBombers().get(i).isShield());
 			if(System.currentTimeMillis() - timer > 1000) {
 				if (_board.getBomber() != null) {
 					for (int i=0;i<_board.getBombers().size();i++) {
@@ -241,23 +262,18 @@ public class Game extends Canvas {
 	/*public static int getBombRate() {
 		return bombRate;
 	}
-
 	public static int getBombRadius() {
 		return bombRadius;
 	}
-
 	public static void setBombRate(int bombRate) {
 		Game.bombRate = bombRate;
 	}
-
 	public static void addBomberSpeed(double i) {
 		bomberSpeed += i;
 	}
-
 	public static void addBombRadius(int i) {
 		bombRadius += i;
 	}
-
 	public static void addBombRate(int i) {
 		bombRate += i;
 	}*/
@@ -281,19 +297,15 @@ public class Game extends Canvas {
 	/*public static double getBomberSpeedV2() {
 		return bomberSpeedV2;
 	}
-
 	public static void setBomberSpeedV2(double bomberSpeedV2) {
 		Game.bomberSpeedV2 = bomberSpeedV2;
 	}
-
 	public static boolean isShield() {
 		return shield;
 	}
-
 	public static void setShield(boolean shield) {
 		Game.shield = shield;
 	}
-
 	public static int getWallpassDuration() {
 		return wallpassDuration;
 	}
@@ -308,7 +320,6 @@ public class Game extends Canvas {
 	public static boolean isGodMode() {
 		return godMode;
 	}
-
 	public static void setGodMode(boolean godMode) {
 		if (godMode) {
 			Game.godMode = godMode;
@@ -318,37 +329,28 @@ public class Game extends Canvas {
 			bomberSpeedV2 = 1.0;
 			wallpassDuration = 999999999;
 		}
-
 	}
-
 	public static int getBombMax() {
 		return bombMax;
 	}
-
 	public static void setBombMax(int bombMax) {
 		Game.bombMax = bombMax;
 	}
-
 	public static boolean isSuperbomb() {
 		return superbomb;
 	}
-
 	public static void setSuperbomb(boolean superbomb) {
 		Game.superbomb = superbomb;
 	}
-
 	public static int getMaxTypeOfBomb() {
 		return maxTypeOfBomb;
 	}
-
 	public static void setMaxTypeOfBomb(int maxTypeOfBomb) {
 		Game.maxTypeOfBomb = maxTypeOfBomb;
 	}
-
 	public static int getTypeOfBomb() {
 		return typeOfBomb;
 	}
-
 	public static void setTypeOfBomb(int typeOfBomb) {
 		Game.typeOfBomb = typeOfBomb;
 	}

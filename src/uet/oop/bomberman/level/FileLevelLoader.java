@@ -37,7 +37,7 @@ public class FileLevelLoader extends LevelLoader {
         try {
 //			String levelInput = "D:\\Project\\Java\\bomber\\bomberman-starter-starter-project-1\\bomberman-starter-starter-project-1\\res\\levels\\Level1.txt";
             BufferedReader in = new BufferedReader(new FileReader(getClass().getResource("/levels/Level" + String.valueOf(level) + ".txt").getFile()));
-            //MultiplayerBufferedReader in = new BufferedReader(new FileReader(getClass().getResource("/levels/multiplayerLevel/Level" + String.valueOf(level) + ".txt").getFile()));
+            //Multiplayer BufferedReader in = new BufferedReader(new FileReader(getClass().getResource("/levels/multiplayerLevel/Level" + String.valueOf(level) + ".txt").getFile()));
             //BufferedReader in = new BufferedReader(new FileReader("levels/Level" + String.valueOf(level) + ".txt"));
             // Read level + height + width
             String[] x = in.readLine().split(" ");
@@ -108,10 +108,12 @@ public class FileLevelLoader extends LevelLoader {
                     _board.addCharacter(new Ghost(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board));
                     _board.addEntity(xE + yE * _width, new Grass(xE, yE, Sprite.grass));
                 }else if (this._map[i][j] == '0') {
-                    // Add Balloon
+                    // Add Boss
                     int xE = j, yE = i;
-                    _board.addCharacter(new Boss(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board));
+                    Boss boss = new Boss(Coordinates.tileToPixel(xE), Coordinates.tileToPixel(yE) + Game.TILES_SIZE, _board);
+                    _board.addCharacter(boss);
                     _board.addEntity(xE + yE * _width, new Grass(xE, yE, Sprite.grass));
+                    _board.setBoss(boss);
                 }else if (this._map[i][j] == 'b') {
                     // Add BombItem
                     int xI = j, yI = i;

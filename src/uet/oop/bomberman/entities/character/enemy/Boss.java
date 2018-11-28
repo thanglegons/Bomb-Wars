@@ -31,4 +31,7 @@ public class Boss extends FlameMonster{
                 break;
         }
     }
+    public int getLife(){
+        return life;
+    }
 }
